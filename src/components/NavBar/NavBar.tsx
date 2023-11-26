@@ -38,6 +38,7 @@ export default function Navbar() {
 
 			return (
 				<NavLink
+					key={categoryName}
 					label={capitalizeFirstLetter(categoryName)}
 					opened={isOpened}
 					onChange={(opened) => setOpenedCategory(opened ? categoryName : null)}
@@ -48,6 +49,7 @@ export default function Navbar() {
 							return (
 								<NavLink
 									h={30}
+									key={nativeHash}
 									style={categoryStyle}
 									component={RouteLink}
 									to={"/docs/natives/" + categoryName.toLowerCase() + "/" + nativeHash}
