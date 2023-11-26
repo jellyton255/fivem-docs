@@ -7,11 +7,18 @@ export interface Natives {
 	hash: string;
 	ns: NS;
 	jhash?: string;
-	manualHash: boolean;
+	manualHash?: boolean;
 	resultsDescription?: string;
 	annotations?: Annotations;
 	aliases?: string[];
-	apiset?: string;
+	apiset?: Apiset;
+	game?: Game;
+}
+
+export enum Apiset {
+	Client = "client",
+	Server = "server",
+	Shared = "shared",
 }
 
 export interface Annotations {
@@ -57,7 +64,14 @@ export enum Lang {
 	Lua = "lua",
 }
 
+export enum Game {
+	Gta5 = "gta5",
+	Ny = "ny",
+	Rdr3 = "rdr3",
+}
+
 export enum NS {
+	Cfx = "CFX",
 	App = "APP",
 	Audio = "AUDIO",
 	Brain = "BRAIN",
@@ -120,8 +134,10 @@ export enum Type {
 	Entity = "Entity",
 	FireID = "FireId",
 	Float = "float",
+	Func = "func",
 	Hash = "Hash",
 	Int = "int",
+	Long = "long",
 	Object = "Object",
 	Ped = "Ped",
 	Pickup = "Pickup",
@@ -141,4 +157,13 @@ export enum Type {
 	TypeVehicle = "Vehicle*",
 	Vector3 = "Vector3*",
 	Vehicle = "Vehicle",
+	Void = "void",
+	ResultsBOOL = "BOOL*",
+	ResultsBlip = "Blip*",
+	ResultsBool = "bool",
+	ResultsEntity = "Entity*",
+	ResultsFloat = "float*",
+	ResultsInt = "int*",
+	ResultsObject = "object",
+	ResultsVector3 = "Vector3",
 }
