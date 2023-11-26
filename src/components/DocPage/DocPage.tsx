@@ -1,4 +1,4 @@
-import { Flex, Title, Text, Stack, Divider, List, Badge, Code, Card, useMantineTheme, rem } from "@mantine/core";
+import { Flex, Title, Text, Stack, Divider, List, Badge, Code, Card, useMantineTheme, rem, Group, Tooltip } from "@mantine/core";
 import { useMemo } from "react";
 import { useNativesStore } from "../../stores/NativesStore";
 import { CodeHighlight } from "@mantine/code-highlight";
@@ -6,6 +6,7 @@ import { camelCaseFromSnakeCase } from "../../utils/stringUtils";
 import Markdown from "react-markdown";
 import { faTriangleExclamation } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import RealmIndicator from "../RealmIndicator";
 
 interface ParamProps {
 	name: string;
@@ -132,7 +133,7 @@ function ExamplesSection(props: { examples: { lang: string; code: string }[] }) 
 	if (!examples || examples.length == 0) return <></>;
 
 	const exampleBlocks = examples.map((example) => {
-		return <CodeHighlight code={`${example.code}`} language="lua" />;
+		return <CodeHighlight key={example.code} code={`${example.code}`} language="lua" />;
 	});
 
 	return (
@@ -157,15 +158,15 @@ function DocPage(props: { native: string }) {
 	if (!nativeData) return <div>Error</div>;
 
 	const nativeName = (nativeData.name && camelCaseFromSnakeCase(nativeData.name)) || nativeData.hash;
-
-	if (nativeData.apiset && nativeData.apiset == "server") return <div></div>;
-
 	const returnString = (nativeData.results && nativeData.results != "void" && nativeData.results) || "";
 
 	return (
 		<Flex direction="column" gap="md" mx={200} my={20}>
 			<Stack gap={4}>
-				<Title order={2}>{nativeName}</Title>
+				<Group gap={10}>
+					<RealmIndicator realm={nativeData.apiset || "client"} />
+					<Title order={2}>{nativeName}</Title>
+				</Group>
 				<Text fz={14} c="dimmed">
 					{nativeData.hash}
 				</Text>
