@@ -14,7 +14,12 @@ import DocPage from "./components/DocPage/DocPage";
 export default function App() {
 	const location = useLocation();
 
-	useNativesStore.getState().addNatives(natives as Record<string, Record<string, Natives>>);
+	const vNatives = natives as Record<string, Record<string, Natives>>;
+	const cfxNatives = natives_cfx as Record<string, Record<string, Natives>>;
+
+	const allNatives = { ...cfxNatives, ...vNatives };
+
+	useNativesStore.getState().addNatives(allNatives);
 
 	useEffect(() => {
 		if (location.hash) {
@@ -28,7 +33,7 @@ export default function App() {
 	const docRoutes = useMemo(() => {
 		const routes = [];
 
-		for (const [categoryName, categoryNatives] of Object.entries(natives)) {
+		for (const [categoryName, categoryNatives] of Object.entries(allNatives)) {
 			for (const [hash, _] of Object.entries(categoryNatives)) {
 				routes.push(
 					<Route key={hash} path={"/docs/natives/" + categoryName.toLowerCase() + "/" + hash} element={<DocPage native={hash} />} />
