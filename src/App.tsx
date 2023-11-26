@@ -1,7 +1,7 @@
-import { AppShell, rem } from "@mantine/core";
+import { AppShell } from "@mantine/core";
 import { Routes, Route, useLocation } from "react-router";
 import Home from "./pages/Home";
-import { memo, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
 import NavBar from "./components/NavBar/NavBar";
 import { useNativesStore } from "./stores/NativesStore";
@@ -45,19 +45,12 @@ export default function App() {
 	}, []);
 
 	return (
-		<AppShell
-			h="100%"
-			navbar={{ width: "18rem", breakpoint: "sm" }}
-			style={{
-				"::WebkitScrollbar": {
-					display: "none",
-				},
-			}}>
+		<AppShell h="100%" navbar={{ width: "18rem", breakpoint: "sm" }}>
 			<AppShell.Navbar>
 				<NavBar />
 			</AppShell.Navbar>
 
-			<AppShell.Main h="100%" pb={(location.pathname != "/" && 40) || 0}>
+			<AppShell.Main h="100%">
 				<Routes>
 					<Route path="/" element={<Home />} />
 					{docRoutes}
