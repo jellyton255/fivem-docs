@@ -27,7 +27,8 @@ export default function Navbar() {
 			// Filter the natives in each category based on the search term
 			const filteredNatives = searchTerm
 				? Object.entries(categoryNatives).filter(
-						([_, nativeData]) => nativeData.name && nativeData.name.toLowerCase().includes(searchTerm.toLowerCase())
+						([_, nativeData]) =>
+							nativeData.name && camelCaseFromSnakeCase(nativeData.name).toLowerCase().includes(searchTerm.toLowerCase())
 				  )
 				: Object.entries(categoryNatives);
 
