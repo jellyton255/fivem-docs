@@ -41,7 +41,7 @@ function CategoryNavLink({ categoryName, categoryNatives, isOpened, setOpenedCat
 		return []; // Return empty array to exclude this category
 	}
 
-	const listHeight = rem(clamp(filteredNatives.length, filteredNatives.length, 20) * 30);
+	const listHeight = rem(clamp(filteredNatives.length, filteredNatives.length, 20) * 31);
 
 	return (
 		<NavLink key={categoryName} label={<Title order={5}>{capitalizeFirstLetter(categoryName)}</Title>} opened={isOpened} onChange={() => setOpenedCategory(categoryName)} style={categoryStyle}>
