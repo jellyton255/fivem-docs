@@ -1,15 +1,13 @@
-import { TextInput, Code, Text, rem, NavLink, AppShell, ScrollArea } from "@mantine/core";
+import { TextInput, Code, Text, rem, AppShell, ScrollArea } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
-import { CSSProperties, useMemo, useState } from "react";
-import { camelCaseFromSnakeCase, capitalizeFirstLetter } from "../../utils/stringUtils";
+import { useMemo, useState } from "react";
 import { useNativesStore } from "../../stores/NativesStore";
-import { NavLink as RouteLink } from "react-router-dom";
 import { useLocation } from "react-router";
 import CategoryNavLink from "./CategoryNavLink";
 
 export default function Navbar() {
 	const { nativesByCategory } = useNativesStore();
-	const [openedCategory, setOpenedCategory] = useState<string | null>();
+	const [openedCategories, setOpenedCategories] = useState<string[]>([]);
 	const [searchTerm, setSearchTerm] = useState("");
 	const location = useLocation();
 
@@ -17,20 +15,17 @@ export default function Navbar() {
 
 	const navRoutes = useMemo(() => {
 		return data.map(([categoryName, categoryNatives]) => {
-			const isOpened = openedCategory == categoryName;
+			const isOpened = openedCategories.includes(categoryName);
 
-			// Filter the natives in each category based on the search term
-			const filteredNatives = searchTerm
-				? Object.entries(categoryNatives).filter(
-						([_, nativeData]) =>
-							nativeData.name && camelCaseFromSnakeCase(nativeData.name).toLowerCase().includes(searchTerm.toLowerCase())
-				  )
-				: Object.entries(categoryNatives);
-
-			// Only render the category if it has filtered natives
-			if (searchTerm && filteredNatives.length === 0) {
-				return []; // Return empty array to exclude this category
-			}
+			const handleSetOpenedCategory = (categoryName: string) => {
+				if (openedCategories.includes(categoryName)) {
+					// If the category is already opened, remove it from the list
+					setOpenedCategories(openedCategories.filter((cat) => cat !== categoryName));
+				} else {
+					// Otherwise, add it to the list
+					setOpenedCategories([...openedCategories, categoryName]);
+				}
+			};
 
 			return (
 				<CategoryNavLink
@@ -44,7 +39,7 @@ export default function Navbar() {
 				/>
 			);
 		});
-	}, [data, openedCategory, searchTerm, location.pathname]);
+	}, [data, openedCategories, searchTerm, location.pathname]);
 
 	return (
 		<>
@@ -66,7 +61,7 @@ export default function Navbar() {
 					Developer Reference
 				</Text>
 			</AppShell.Section>
-			<AppShell.Section grow w="95%" mx="auto" component={ScrollArea} scrollbarSize={2}>
+			<AppShell.Section grow w="95%" mx="auto" component={ScrollArea} scrollbarSize={6}>
 				{navRoutes}
 			</AppShell.Section>
 		</>
