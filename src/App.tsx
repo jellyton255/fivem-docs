@@ -11,15 +11,17 @@ import natives_cfx from "./natives_cfx.json";
 import { Natives } from "./types/Natives";
 import DocPage from "./components/DocPage/DocPage";
 
+const vNatives = natives as Record<string, Record<string, Natives>>;
+const cfxNatives = natives_cfx as Record<string, Record<string, Natives>>;
+
+export const allNatives = { ...cfxNatives, ...vNatives };
+
 export default function App() {
 	const location = useLocation();
 
-	const vNatives = natives as Record<string, Record<string, Natives>>;
-	const cfxNatives = natives_cfx as Record<string, Record<string, Natives>>;
-
-	const allNatives = { ...cfxNatives, ...vNatives };
-
-	useNativesStore.getState().addNatives(allNatives);
+	useEffect(() => {
+		useNativesStore.getState().addNatives(allNatives);
+	}, []);
 
 	useEffect(() => {
 		if (location.hash) {
@@ -35,9 +37,7 @@ export default function App() {
 
 		for (const [categoryName, categoryNatives] of Object.entries(allNatives)) {
 			for (const [hash, _] of Object.entries(categoryNatives)) {
-				routes.push(
-					<Route key={hash} path={"/docs/natives/" + categoryName.toLowerCase() + "/" + hash} element={<DocPage native={hash} />} />
-				);
+				routes.push(<Route key={hash} path={"/docs/natives/" + categoryName.toLowerCase() + "/" + hash} element={<DocPage native={hash} />} />);
 			}
 		}
 
