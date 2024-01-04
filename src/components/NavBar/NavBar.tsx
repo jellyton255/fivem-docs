@@ -5,12 +5,7 @@ import { camelCaseFromSnakeCase, capitalizeFirstLetter } from "../../utils/strin
 import { useNativesStore } from "../../stores/NativesStore";
 import { NavLink as RouteLink } from "react-router-dom";
 import { useLocation } from "react-router";
-
-const categoryStyle: CSSProperties = {
-	borderRadius: rem(6),
-	padding: `${rem(6)} ${rem(12)}`,
-	transition: "all 0.3s ease", // Customize as needed
-};
+import CategoryNavLink from "./CategoryNavLink";
 
 export default function Navbar() {
 	const { nativesByCategory } = useNativesStore();
@@ -38,28 +33,15 @@ export default function Navbar() {
 			}
 
 			return (
-				<NavLink
+				<CategoryNavLink
 					key={categoryName}
-					label={capitalizeFirstLetter(categoryName)}
-					opened={isOpened}
-					onChange={(opened) => setOpenedCategory(opened ? categoryName : null)}
-					style={categoryStyle}>
-					<></>
-					{isOpened &&
-						filteredNatives.map(([nativeHash, nativeData]) => {
-							return (
-								<NavLink
-									h={30}
-									key={nativeHash}
-									style={categoryStyle}
-									component={RouteLink}
-									to={"/docs/natives/" + categoryName.toLowerCase() + "/" + nativeHash}
-									active={location.pathname == "/docs/natives/" + categoryName.toLowerCase() + "/" + nativeHash}
-									label={<Text fz={13}>{(nativeData.name && camelCaseFromSnakeCase(nativeData?.name)) || nativeHash}</Text>}
-								/>
-							);
-						})}
-				</NavLink>
+					categoryName={categoryName}
+					categoryNatives={categoryNatives}
+					isOpened={isOpened}
+					searchTerm={searchTerm}
+					location={location}
+					setOpenedCategory={handleSetOpenedCategory}
+				/>
 			);
 		});
 	}, [data, openedCategory, searchTerm, location.pathname]);
