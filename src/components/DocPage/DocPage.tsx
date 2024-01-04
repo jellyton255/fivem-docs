@@ -1,5 +1,5 @@
-import { Flex, Title, Text, Stack, Divider, List, Badge, Code, Card, useMantineTheme, rem, Group, Tooltip } from "@mantine/core";
-import { memo, useMemo } from "react";
+import { Flex, Title, Text, Stack, Divider, List, Badge, Code, Card, useMantineTheme, rem, Group, Tooltip, Center, Loader } from "@mantine/core";
+import { memo, useMemo, Suspense } from "react";
 import { useNativesStore } from "../../stores/NativesStore";
 import { CodeHighlight } from "@mantine/code-highlight";
 import { camelCaseFromSnakeCase } from "../../utils/stringUtils";
@@ -180,30 +180,37 @@ function ExamplesSection(props: { examples: { lang: string; code: string }[] }) 
 
 function DocPage(props: { native: string }) {
 	const { native } = props;
-	const { getNativeByHash } = useNativesStore();
+	const { nativesByCategory, getNativeByHash } = useNativesStore();
 
-	const nativeData = useMemo(() => getNativeByHash(native), [props.native]);
+	const nativeData = useMemo(() => getNativeByHash(native), [props.native, nativesByCategory]);
 
-	if (!nativeData) return <div>Error</div>;
+	if (!nativeData)
+		return (
+			<Center h="90vh">
+				<Loader />
+			</Center>
+		);
 
 	const nativeName = (nativeData.name && camelCaseFromSnakeCase(nativeData.name)) || nativeData.hash;
 	const returnString = (nativeData.results && nativeData.results != "void" && nativeData.results) || "";
 
 	return (
 		<Flex direction="column" gap="md" mx={200} my={20}>
-			<Stack gap={4}>
-				<Group gap={10}>
-					<RealmIndicator realm={nativeData.apiset || "client"} />
-					<Title order={2}>{nativeName}</Title>
-				</Group>
-				<Text fz={14} c="dimmed">
-					{nativeData.hash}
-				</Text>
-			</Stack>
-			<CodeHighlight code={`${returnString} ${nativeName}(${getParamaterString(nativeData.params)})`} language="lua" copyLabel="Copy button code" copiedLabel="Copied!" />
-			<DescriptionSection description={nativeData.description} />
-			<ParamSection params={nativeData.params} />
-			<ExamplesSection examples={nativeData.examples} />
+			<Suspense fallback={<Loader />}>
+				<Stack gap={4}>
+					<Group gap={10}>
+						<RealmIndicator realm={nativeData.apiset || "client"} />
+						<Title order={2}>{nativeName}</Title>
+					</Group>
+					<Text fz={14} c="dimmed">
+						{nativeData.hash}
+					</Text>
+				</Stack>
+				<CodeHighlight code={`${returnString} ${nativeName}(${getParamaterString(nativeData.params)})`} language="lua" copyLabel="Copy button code" copiedLabel="Copied!" />
+				<DescriptionSection description={nativeData.description} />
+				<ParamSection params={nativeData.params} />
+				<ExamplesSection examples={nativeData.examples} />
+			</Suspense>
 		</Flex>
 	);
 }
