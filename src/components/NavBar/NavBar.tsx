@@ -1,9 +1,10 @@
 import { TextInput, Code, Text, rem, AppShell, ScrollArea } from "@mantine/core";
-import { IconSearch } from "@tabler/icons-react";
 import { useMemo, useState } from "react";
 import { useNativesStore } from "../../stores/NativesStore";
 import { useLocation } from "react-router";
 import CategoryNavLink from "./CategoryNavLink";
+import { faMagnifyingGlass } from "@fortawesome/pro-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Navbar() {
 	const { nativesByCategory } = useNativesStore();
@@ -47,7 +48,7 @@ export default function Navbar() {
 				<TextInput
 					placeholder="Search"
 					size="xs"
-					leftSection={<IconSearch style={{ width: rem(12), height: rem(12) }} stroke={1.5} />}
+					leftSection={<FontAwesomeIcon icon={faMagnifyingGlass} size="xs" />}
 					rightSectionWidth={100}
 					rightSection={<Code>Ctrl + Space</Code>}
 					styles={{ section: { pointerEvents: "none" } }}
