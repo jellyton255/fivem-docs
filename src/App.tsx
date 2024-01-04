@@ -45,7 +45,7 @@ export default function App() {
 	}, []);
 
 	return (
-		<AppShell h="100%" navbar={{ width: "18rem", breakpoint: "sm" }}>
+		<AppShell h="100%" navbar={{ width: "22rem", breakpoint: "sm" }}>
 			<AppShell.Navbar>
 				<NavBar />
 			</AppShell.Navbar>
