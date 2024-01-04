@@ -1,20 +1,34 @@
-import { Badge, Tooltip } from "@mantine/core";
+import { Box, MantineColor, MantineGradient, Tooltip, useMantineTheme } from "@mantine/core";
 import { capitalizeFirstLetter } from "../utils/stringUtils";
 
 type Realm = "client" | "server" | "shared";
-
-const realmMapper = {
+const realmMapper: Record<Realm, string> = {
 	client: "orange",
 	server: "blue",
 	shared: "green",
 };
 
+const gradient = `linear-gradient(
+	50deg,
+	#228BE6 50%,
+	#F76707 50%
+)`;
+
 function RealmIndicator(props: { realm: Realm }) {
 	const { realm } = props;
 
+	const theme = useMantineTheme();
+
 	return (
 		<Tooltip label={capitalizeFirstLetter(realm)}>
-			<Badge color={realmMapper[realm]} radius="sm" w={22} h={22} />
+			<Box
+				bg={(realm == "shared" && gradient) || realmMapper[realm]}
+				w={22}
+				h={22}
+				style={{
+					borderRadius: theme.radius.md,
+				}}
+			/>
 		</Tooltip>
 	);
 }
