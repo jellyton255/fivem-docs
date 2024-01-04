@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { MantineProvider } from "@mantine/core";
-import { Helmet } from "react-helmet";
 import App from "./App";
 
 import "@mantine/core/styles.css";
@@ -15,6 +14,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 			defaultColorScheme="dark"
 			theme={{
 				primaryColor: "orange",
+				primaryShade: 7,
 			}}>
 			<BrowserRouter>
 				<App />
