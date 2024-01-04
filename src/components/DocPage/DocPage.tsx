@@ -1,5 +1,5 @@
 import { Flex, Title, Text, Stack, Divider, List, Badge, Code, Card, useMantineTheme, rem, Group, Tooltip } from "@mantine/core";
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 import { useNativesStore } from "../../stores/NativesStore";
 import { CodeHighlight } from "@mantine/code-highlight";
 import { camelCaseFromSnakeCase } from "../../utils/stringUtils";
@@ -200,12 +200,7 @@ function DocPage(props: { native: string }) {
 					{nativeData.hash}
 				</Text>
 			</Stack>
-			<CodeHighlight
-				code={`${returnString} ${nativeName}(${getParamaterString(nativeData.params)})`}
-				language="lua"
-				copyLabel="Copy button code"
-				copiedLabel="Copied!"
-			/>
+			<CodeHighlight code={`${returnString} ${nativeName}(${getParamaterString(nativeData.params)})`} language="lua" copyLabel="Copy button code" copiedLabel="Copied!" />
 			<DescriptionSection description={nativeData.description} />
 			<ParamSection params={nativeData.params} />
 			<ExamplesSection examples={nativeData.examples} />
@@ -213,4 +208,4 @@ function DocPage(props: { native: string }) {
 	);
 }
 
-export default DocPage;
+export default memo(DocPage);
