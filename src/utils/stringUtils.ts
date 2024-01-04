@@ -1,5 +1,13 @@
 // Capitalizes the first letter of a string and makes the rest lowercase
+const EXEMPTWORDS: Record<string, boolean> = {
+	DLC: true,
+	CFX: true,
+	HUD: true,
+};
+
 export const capitalizeFirstLetter = (str: string): string => {
+	if (EXEMPTWORDS[str]) return str;
+
 	if (typeof str !== "string" || str.length === 0) return str;
 	return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 };
