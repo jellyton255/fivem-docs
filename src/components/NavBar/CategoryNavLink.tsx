@@ -1,4 +1,4 @@
-import { NavLink, CSSProperties, rem, Loader } from "@mantine/core";
+import { NavLink, CSSProperties, rem, Loader, Title } from "@mantine/core";
 import { Location } from "react-router-dom";
 import { camelCaseFromSnakeCase, capitalizeFirstLetter } from "../../utils/stringUtils";
 import { Suspense, useEffect, useMemo, useState } from "react";
@@ -44,7 +44,7 @@ function CategoryNavLink({ categoryName, categoryNatives, isOpened, setOpenedCat
 	const listHeight = rem(clamp(filteredNatives.length, filteredNatives.length, 20) * 30);
 
 	return (
-		<NavLink key={categoryName} label={capitalizeFirstLetter(categoryName)} opened={isOpened} onChange={() => setOpenedCategory(categoryName)} style={categoryStyle}>
+		<NavLink key={categoryName} label={<Title order={5}>{capitalizeFirstLetter(categoryName)}</Title>} opened={isOpened} onChange={() => setOpenedCategory(categoryName)} style={categoryStyle}>
 			{(isOpened && (
 				<>
 					<Virtuoso

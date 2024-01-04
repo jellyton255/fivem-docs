@@ -12,13 +12,17 @@ const categoryStyle: CSSProperties = {
 function NativeNavLink({ nativeHash, nativeData, formattedCategoryName, location }: { nativeHash: string; nativeData: any; formattedCategoryName: string; location: Location }) {
 	return (
 		<NavLink
-			h={30}
+			h={31}
 			key={nativeHash}
 			style={categoryStyle}
 			component={RouteLink}
 			to={"/docs/natives/" + formattedCategoryName + "/" + nativeHash}
 			active={location.pathname == "/docs/natives/" + formattedCategoryName + "/" + nativeHash}
-			label={<Text fz={13}>{(nativeData.name && camelCaseFromSnakeCase(nativeData?.name)) || nativeHash}</Text>}
+			label={
+				<Text fz={14} fw={500}>
+					{(nativeData.name && camelCaseFromSnakeCase(nativeData?.name)) || nativeHash}
+				</Text>
+			}
 		/>
 	);
 }
