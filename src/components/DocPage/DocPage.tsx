@@ -68,7 +68,25 @@ function DescriptionSection(props: { description: string }) {
 					components={{
 						p(props) {
 							const { children } = props;
-							return <Text>{children}</Text>;
+							return (
+								<Text
+									style={{
+										whiteSpace: "pre-wrap",
+									}}>
+									{children}
+								</Text>
+							);
+						},
+						code(props) {
+							const { children } = props;
+							return (
+								<Text
+									style={{
+										whiteSpace: "pre-wrap",
+									}}>
+									{children}
+								</Text>
+							);
 						},
 					}}>
 					{description}
@@ -102,6 +120,17 @@ function ParamSection(props: { params: ParamProps[] }) {
 								p(props) {
 									const { node, children, ...rest } = props;
 									return <Text>{children}</Text>;
+								},
+								code(props) {
+									const { children } = props;
+									return (
+										<Text
+											style={{
+												whiteSpace: "pre-wrap",
+											}}>
+											{children}
+										</Text>
+									);
 								},
 							}}>
 							{paramData.description}
