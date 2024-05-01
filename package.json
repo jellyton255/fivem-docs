@@ -12,32 +12,32 @@
 		"deploy": "gh-pages -d dist"
 	},
 	"dependencies": {
-		"@emotion/react": "^11.11.3",
-		"@fortawesome/fontawesome-svg-core": "^6.5.1",
-		"@fortawesome/pro-solid-svg-icons": "^6.5.1",
+		"@emotion/react": "^11.11.4",
+		"@fortawesome/fontawesome-svg-core": "^6.5.2",
+		"@fortawesome/pro-solid-svg-icons": "^6.5.2",
 		"@fortawesome/react-fontawesome": "0.2.0",
-		"@mantine/code-highlight": "^7.4.0",
-		"@mantine/colors-generator": "^7.4.0",
-		"@mantine/core": "^7.4.0",
-		"@mantine/hooks": "^7.4.0",
-		"react": "^18.2.0",
-		"react-dom": "^18.2.0",
+		"@mantine/code-highlight": "^7.8.1",
+		"@mantine/colors-generator": "^7.8.1",
+		"@mantine/core": "^7.8.1",
+		"@mantine/hooks": "^7.8.1",
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1",
 		"react-markdown": "^9.0.1",
-		"react-router": "^6.21.1",
-		"react-router-dom": "^6.21.1",
-		"react-virtuoso": "^4.6.2",
-		"zustand": "^4.4.7"
+		"react-router": "^6.23.0",
+		"react-router-dom": "^6.23.0",
+		"react-virtuoso": "^4.7.10",
+		"zustand": "^4.5.2"
 	},
 	"devDependencies": {
-		"@fortawesome/fontawesome-common-types": "^6.5.1",
-		"@types/react": "^18.2.46",
-		"@types/react-dom": "^18.2.18",
+		"@fortawesome/fontawesome-common-types": "^6.5.2",
+		"@types/react": "^18.3.1",
+		"@types/react-dom": "^18.3.0",
 		"@vitejs/plugin-react": "^4.2.1",
 		"gh-pages": "^6.1.1",
-		"postcss": "^8.4.32",
-		"postcss-preset-mantine": "^1.12.3",
+		"postcss": "^8.4.38",
+		"postcss-preset-mantine": "^1.15.0",
 		"postcss-simple-vars": "^7.0.1",
-		"typescript": "^5.3.3",
-		"vite": "^4.5.1"
+		"typescript": "^5.4.5",
+		"vite": "^5.2.10"
 	}
 }
