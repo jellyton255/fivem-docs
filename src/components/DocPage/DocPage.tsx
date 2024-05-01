@@ -180,9 +180,9 @@ function ExamplesSection(props: { examples: { lang: string; code: string }[] }) 
 
 function DocPage(props: { native: string }) {
 	const { native } = props;
-	const { nativesByCategory, getNativeByHash } = useNativesStore();
+	const { Natives, getNativeByHash } = useNativesStore();
 
-	const nativeData = useMemo(() => getNativeByHash(native), [props.native, nativesByCategory]);
+	const nativeData = useMemo(() => getNativeByHash(native), [props.native, Natives]);
 
 	if (!nativeData)
 		return (

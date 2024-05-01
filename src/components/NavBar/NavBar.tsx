@@ -7,12 +7,12 @@ import { faMagnifyingGlass } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Navbar() {
-	const { nativesByCategory } = useNativesStore();
+	const { Natives } = useNativesStore();
 	const [openedCategories, setOpenedCategories] = useState<string[]>([]);
 	const [searchTerm, setSearchTerm] = useState("");
 	const location = useLocation();
 
-	const data = useMemo(() => Object.entries(nativesByCategory), [nativesByCategory]);
+	const data = useMemo(() => Object.entries(Natives), [Natives]);
 
 	const navRoutes = useMemo(() => {
 		return data.map(([categoryName, categoryNatives]) => {
@@ -28,17 +28,7 @@ export default function Navbar() {
 				}
 			};
 
-			return (
-				<CategoryNavLink
-					key={categoryName}
-					categoryName={categoryName}
-					categoryNatives={categoryNatives}
-					isOpened={isOpened}
-					searchTerm={searchTerm}
-					location={location}
-					setOpenedCategory={handleSetOpenedCategory}
-				/>
-			);
+			return <CategoryNavLink key={categoryName} categoryName={categoryName} categoryNatives={categoryNatives} isOpened={isOpened} searchTerm={searchTerm} location={location} setOpenedCategory={handleSetOpenedCategory} />;
 		});
 	}, [data, openedCategories, searchTerm, location.pathname]);
 

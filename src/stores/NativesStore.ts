@@ -2,33 +2,33 @@ import { create } from "zustand";
 import { Natives } from "../types/Natives";
 
 interface NativesState {
-	nativesByCategory: Record<string, Record<string, Natives>>;
-	addNatives: (natives: Record<string, Record<string, Natives>>) => void;
+	Natives: Record<string, Record<string, Natives>>;
+	setNatives: (natives: Record<string, Record<string, Natives>>) => void;
 	getAllCategories: () => string[];
 	getNativesByCategory: (category: string) => Record<string, Natives> | undefined;
 	getNativeByHash: (hash: string) => Natives | undefined;
 }
 
 export const useNativesStore = create<NativesState>((set, get) => ({
-	nativesByCategory: {},
+	Natives: {},
 
-	addNatives: (natives) => set({ nativesByCategory: natives }),
+	setNatives: (natives) => set({ Natives: natives }),
 
 	getAllCategories: () => {
 		const state = get();
-		return Object.keys(state.nativesByCategory);
+		return Object.keys(state.Natives);
 	},
 
 	getNativesByCategory: (category) => {
 		const state = get();
-		return state.nativesByCategory[category];
+		return state.Natives[category];
 	},
 
 	getNativeByHash: (hash) => {
-		const { nativesByCategory } = get();
-		for (const category in nativesByCategory) {
-			if (nativesByCategory[category][hash]) {
-				return nativesByCategory[category][hash];
+		const { Natives } = get();
+		for (const category in Natives) {
+			if (Natives[category][hash]) {
+				return Natives[category][hash];
 			}
 		}
 		return undefined;

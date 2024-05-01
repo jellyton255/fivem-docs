@@ -1,26 +1,38 @@
-import { AppShell } from "@mantine/core";
+import { AppShell, Center, Loader } from "@mantine/core";
 import { Routes, Route, useLocation } from "react-router";
 import Home from "./pages/Home";
 import { useEffect, useMemo } from "react";
-
 import NavBar from "./components/NavBar/NavBar";
 import { useNativesStore } from "./stores/NativesStore";
-
-import natives from "./natives.json";
-import natives_cfx from "./natives_cfx.json";
-import { Natives } from "./types/Natives";
 import DocPage from "./components/DocPage/DocPage";
-
-const vNatives = natives as Record<string, Record<string, Natives>>;
-const cfxNatives = natives_cfx as Record<string, Record<string, Natives>>;
-
-export const allNatives = { ...cfxNatives, ...vNatives };
 
 export default function App() {
 	const location = useLocation();
+	const { setNatives, Natives, getAllCategories } = useNativesStore();
+
+	async function getNatives() {
+		const nativesRes = await fetch("https://runtime.fivem.net/doc/natives.json");
+
+		if (!nativesRes.ok) {
+			throw new Error("Failed to fetch natives.");
+		}
+
+		const natives = await nativesRes.json();
+
+		const cfxNativesRes = await fetch("https://runtime.fivem.net/doc/natives.json");
+
+		if (!cfxNativesRes.ok) {
+			throw new Error("Failed to fetch cfx natives.");
+		}
+
+		const cfxNatives = await cfxNativesRes.json();
+
+		setNatives({ ...cfxNatives, ...natives });
+	}
 
 	useEffect(() => {
-		useNativesStore.getState().addNatives(allNatives);
+		if (getAllCategories()?.length > 0) return;
+		getNatives();
 	}, []);
 
 	useEffect(() => {
@@ -35,17 +47,24 @@ export default function App() {
 	const docRoutes = useMemo(() => {
 		const routes = [];
 
-		for (const [categoryName, categoryNatives] of Object.entries(allNatives)) {
+		for (const [categoryName, categoryNatives] of Object.entries(Natives)) {
 			for (const [hash, _] of Object.entries(categoryNatives)) {
 				routes.push(<Route key={hash} path={"/docs/natives/" + categoryName.toLowerCase() + "/" + hash} element={<DocPage native={hash} />} />);
 			}
 		}
 
 		return routes;
-	}, []);
+	}, [Natives]);
+
+	if (getAllCategories()?.length <= 0)
+		return (
+			<Center h="100vh">
+				<Loader />
+			</Center>
+		);
 
 	return (
-		<AppShell h="100%" navbar={{ width: "22rem", breakpoint: "sm" }}>
+		<AppShell h="100vh" navbar={{ width: "22rem", breakpoint: "sm" }}>
 			<AppShell.Navbar>
 				<NavBar />
 			</AppShell.Navbar>
