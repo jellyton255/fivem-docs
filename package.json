@@ -16,16 +16,17 @@
 		"@fortawesome/fontawesome-svg-core": "^6.5.2",
 		"@fortawesome/pro-solid-svg-icons": "^6.5.2",
 		"@fortawesome/react-fontawesome": "0.2.0",
-		"@mantine/code-highlight": "^7.8.1",
-		"@mantine/colors-generator": "^7.8.1",
-		"@mantine/core": "^7.8.1",
-		"@mantine/hooks": "^7.8.1",
+		"@mantine/code-highlight": "^7.9.0",
+		"@mantine/colors-generator": "^7.9.0",
+		"@mantine/core": "^7.9.0",
+		"@mantine/hooks": "^7.9.0",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
 		"react-markdown": "^9.0.1",
 		"react-router": "^6.23.0",
 		"react-router-dom": "^6.23.0",
 		"react-virtuoso": "^4.7.10",
+		"remark-gfm": "^4.0.0",
 		"zustand": "^4.5.2"
 	},
 	"devDependencies": {
@@ -38,6 +39,6 @@
 		"postcss-preset-mantine": "^1.15.0",
 		"postcss-simple-vars": "^7.0.1",
 		"typescript": "^5.4.5",
-		"vite": "^5.2.10"
+		"vite": "^5.2.11"
 	}
 }
