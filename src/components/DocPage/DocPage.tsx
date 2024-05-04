@@ -65,6 +65,7 @@ function DescriptionSection(props: { description: string }) {
 					Description
 				</Title>
 				<Markdown
+					remarkPlugins={[[remarkGfm]]}
 					components={{
 						p(props) {
 							const { children } = props;
@@ -77,13 +78,22 @@ function DescriptionSection(props: { description: string }) {
 								</Text>
 							);
 						},
-						code(props) {
+						table(props) {
 							const { children } = props;
 							return (
-								<Text
-									style={{
-										whiteSpace: "pre-wrap",
-									}}>
+								<Card m={12} pt={12} bg="#1b1b1b">
+									<Table>{children}</Table>
+								</Card>
+							);
+						},
+						th(props) {
+							const { children } = props;
+							return (
+								<Table.Th fz={16} px={0}>
+									{children}
+								</Table.Th>
+							);
+						},
 									{children}
 								</Text>
 							);
