@@ -44,18 +44,6 @@ export default function App() {
 		}
 	}, [location]);
 
-	const docRoutes = useMemo(() => {
-		const routes = [];
-
-		for (const [categoryName, categoryNatives] of Object.entries(Natives)) {
-			for (const [hash, _] of Object.entries(categoryNatives)) {
-				routes.push(<Route key={hash} path={"/docs/natives/" + categoryName.toLowerCase() + "/" + hash} element={<DocPage native={hash} />} />);
-			}
-		}
-
-		return routes;
-	}, [Natives]);
-
 	if (getAllCategories()?.length <= 0)
 		return (
 			<Center h="100vh">
@@ -72,7 +60,7 @@ export default function App() {
 			<AppShell.Main h="100%">
 				<Routes>
 					<Route path="/" element={<Home />} />
-					{docRoutes}
+					<Route path={`/docs/natives/`} element={<DocPage />} />
 				</Routes>
 			</AppShell.Main>
 		</AppShell>

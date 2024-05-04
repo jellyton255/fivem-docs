@@ -27,10 +27,7 @@ function CategoryNavLink({ categoryName, categoryNatives, isOpened, setOpenedCat
 
 	// Filter the natives in each category based on the search term
 	const filteredNatives = useMemo(
-		() =>
-			searchTerm
-				? Object.entries(categoryNatives).filter(([_, nativeData]) => nativeData.name && camelCaseFromSnakeCase(nativeData.name).toLowerCase().includes(searchTerm.toLowerCase()))
-				: Object.entries(categoryNatives),
+		() => (searchTerm ? Object.entries(categoryNatives).filter(([_, nativeData]) => nativeData.name && camelCaseFromSnakeCase(nativeData.name).toLowerCase().includes(searchTerm.toLowerCase())) : Object.entries(categoryNatives)),
 		[searchTerm]
 	);
 
@@ -50,9 +47,7 @@ function CategoryNavLink({ categoryName, categoryNatives, isOpened, setOpenedCat
 					<Virtuoso
 						style={{ width: "95%", height: listHeight }}
 						data={filteredNatives}
-						itemContent={(index, [nativeHash, nativeData]) => (
-							<NativeNavLink key={nativeHash} nativeHash={nativeHash} nativeData={nativeData} formattedCategoryName={formattedCategoryName} location={location} />
-						)}
+						itemContent={(index, [nativeHash, nativeData]) => <NativeNavLink key={nativeHash} nativeHash={nativeData.jhash || nativeHash} nativeData={nativeData} formattedCategoryName={formattedCategoryName} location={location} />}
 					/>
 				</>
 			)) || <></>}

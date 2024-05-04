@@ -16,7 +16,7 @@ function NativeNavLink({ nativeHash, nativeData, formattedCategoryName, location
 			key={nativeHash}
 			style={categoryStyle}
 			component={RouteLink}
-			to={"/docs/natives/" + formattedCategoryName + "/" + nativeHash}
+			to={"/docs/natives/?_" + nativeHash}
 			active={location.pathname == "/docs/natives/" + formattedCategoryName + "/" + nativeHash}
 			label={
 				<Text fz={14} fw={500}>
