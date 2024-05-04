@@ -19,7 +19,7 @@ export default function App() {
 
 		const natives = await nativesRes.json();
 
-		const cfxNativesRes = await fetch("https://runtime.fivem.net/doc/natives.json");
+		const cfxNativesRes = await fetch("https://runtime.fivem.net/doc/natives_cfx.json");
 
 		if (!cfxNativesRes.ok) {
 			throw new Error("Failed to fetch cfx natives.");
