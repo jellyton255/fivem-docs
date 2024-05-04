@@ -19,7 +19,7 @@ export default function Callout(props: CalloutTypes) {
 	const color = theme.variantColorResolver({ color: typeColorMapping[props.type || "general"] || "electric", theme: useMantineTheme(), variant: "light" });
 
 	return (
-		<Card py="0" radius="md" bg={color.background} shadow="md">
+		<Card radius="md" bg={color.background} shadow="md">
 			<Flex gap="md" justify="center" align="center">
 				{props.emoji && <Text fz="lg">{props.emoji}</Text>}
 				{props.children}
