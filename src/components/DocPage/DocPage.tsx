@@ -1,12 +1,17 @@
-import { Flex, Title, Text, Stack, Divider, List, Badge, Code, Card, useMantineTheme, rem, Group, Tooltip, Center, Loader } from "@mantine/core";
+import { Flex, Title, Text, Stack, Divider, List, Badge, Code, Card, useMantineTheme, rem, Group, Tooltip, Center, Loader, Table, Anchor } from "@mantine/core";
 import { memo, useMemo, Suspense } from "react";
 import { useNativesStore } from "../../stores/NativesStore";
-import { CodeHighlight } from "@mantine/code-highlight";
+import { CodeHighlight, CodeHighlightTabs } from "@mantine/code-highlight";
 import { camelCaseFromSnakeCase } from "../../utils/stringUtils";
 import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { faTriangleExclamation } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import RealmIndicator from "../RealmIndicator";
+import { Natives } from "../../types/Natives";
+import { useLocation, useParams } from "react-router";
+import { Link } from "react-router-dom";
+import Callout from "../Callout";
 
 interface ParamProps {
 	name: string;
@@ -22,6 +27,14 @@ function getParamaterString(params: ParamProps[]) {
 	});
 	paramsString += (params.length > 0 && " ") || "";
 	return paramsString;
+}
+
+function replaceHashWithQuestionMark(inputString: string) {
+	return inputString.replace(/#/g, "?");
+}
+
+function containsNewline(inputString: string) {
+	return inputString.includes("\n");
 }
 
 function DescriptionSection(props: { description: string }) {
@@ -94,8 +107,18 @@ function DescriptionSection(props: { description: string }) {
 								</Table.Th>
 							);
 						},
+						code(props) {
+							console.log(props);
+							const { children, className } = props;
+							return className || (containsNewline(children as string) && <CodeHighlight w="fit-content" maw="100%" code={children as string} style={{ whiteSpace: "pre-wrap" }} withCopyButton={false} />) || <Code>{children}</Code>;
+						},
+						a(props) {
+							const { children, href } = props;
+
+							return (
+								<Anchor to={(href && replaceHashWithQuestionMark(href)) || ""} fz={16} style={{ whiteSpace: "pre-wrap" }} component={Link}>
 									{children}
-								</Text>
+								</Anchor>
 							);
 						},
 					}}>
@@ -106,7 +129,7 @@ function DescriptionSection(props: { description: string }) {
 	);
 }
 
-function ParamSection(props: { params: ParamProps[] }) {
+function ArgsSection(props: { params: ParamProps[] }) {
 	const { params } = props;
 
 	if (!params || params.length == 0) return <></>;
@@ -120,7 +143,7 @@ function ParamSection(props: { params: ParamProps[] }) {
 						{index + 1}
 					</Badge>
 				}>
-				<Code fz={16} c="dimmed">
+				<Code fz={16}>
 					{paramData.name}: {paramData.type}
 				</Code>
 				{paramData.description && (
@@ -134,12 +157,12 @@ function ParamSection(props: { params: ParamProps[] }) {
 								code(props) {
 									const { children } = props;
 									return (
-										<Text
+										<Code
 											style={{
 												whiteSpace: "pre-wrap",
 											}}>
 											{children}
-										</Text>
+										</Code>
 									);
 								},
 							}}>
@@ -172,7 +195,7 @@ function ExamplesSection(props: { examples: { lang: string; code: string }[] }) 
 	if (!examples || examples.length == 0) return <></>;
 
 	const exampleBlocks = examples.map((example) => {
-		return <CodeHighlight key={example.code} code={`${example.code}`} language="lua" />;
+		return { code: example.code, language: example.lang, fileName: example.lang };
 	});
 
 	return (
@@ -182,7 +205,7 @@ function ExamplesSection(props: { examples: { lang: string; code: string }[] }) 
 				<Title order={1} mb={20}>
 					Examples
 				</Title>
-				{exampleBlocks}
+				<CodeHighlightTabs w="fit-content" code={exampleBlocks} />
 			</Stack>
 		</>
 	);
@@ -209,7 +232,7 @@ function DocPage() {
 	const returnString = (nativeData.results && nativeData.results != "void" && nativeData.results) || "";
 
 	return (
-		<Flex direction="column" gap="md" mx={200} my={20}>
+		<Flex direction="column" gap="md" mx={200} py={20} maw="100%">
 			<Suspense fallback={<Loader />}>
 				<Stack gap={4}>
 					<Group gap={10}>
@@ -222,7 +245,7 @@ function DocPage() {
 				</Stack>
 				<CodeHighlight code={`${returnString} ${nativeName}(${getParamaterString(nativeData.params)})`} language="lua" copyLabel="Copy button code" copiedLabel="Copied!" />
 				<DescriptionSection description={nativeData.description} />
-				<ParamSection params={nativeData.params} />
+				<ArgsSection params={nativeData.params} />
 				<ExamplesSection examples={nativeData.examples} />
 			</Suspense>
 		</Flex>
