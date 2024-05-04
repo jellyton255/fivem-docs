@@ -188,16 +188,20 @@ function ExamplesSection(props: { examples: { lang: string; code: string }[] }) 
 	);
 }
 
-function DocPage(props: { native: string }) {
-	const { native } = props;
-	const { Natives, getNativeByHash } = useNativesStore();
-
-	const nativeData = useMemo(() => getNativeByHash(native), [props.native, Natives]);
+function DocPage() {
+	const location = useLocation();
+	const { NativesByHash, NativesByJHash } = useNativesStore();
+	const hash = location.search.substring(2);
+	const nativeData = NativesByJHash[hash] || NativesByHash[hash];
 
 	if (!nativeData)
 		return (
 			<Center h="90vh">
-				<Loader />
+				<Callout type="error" emoji="❌">
+					<Text fz={22} fw={700} c="white">
+						The native you're looking for doesn't exist!
+					</Text>
+				</Callout>
 			</Center>
 		);
 
