@@ -30,7 +30,7 @@ function getParamaterString(params: ParamProps[]) {
 }
 
 function replaceHashWithQuestionMark(inputString: string) {
-	return inputString.replace(/#/g, "?");
+	return inputString.replace(/#/g, "/");
 }
 
 function containsNewline(inputString: string) {
@@ -115,7 +115,7 @@ function DescriptionSection(props: { description: string }) {
 							const { children, href } = props;
 
 							return (
-								<Anchor href={(href && replaceHashWithQuestionMark(href)) || ""} fz={16} style={{ whiteSpace: "pre-wrap" }} component={NextLink}>
+								<Anchor href={(href && "/docs/natives/" + replaceHashWithQuestionMark(href)) || ""} fz={16} style={{ whiteSpace: "pre-wrap" }} component={NextLink}>
 									{children}
 								</Anchor>
 							);
@@ -210,9 +210,22 @@ function ExamplesSection(props: { examples: { lang: string; code: string }[] }) 
 	);
 }
 
-export default function Page({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
+export default function Page({ params }: { params: { hash: string } }) {
 	const { NativesByHash, NativesByJHash } = useNativesStore();
-	const hash = Object.keys(searchParams)[0].substring(1);
+
+	const hash = params?.hash?.substring(1);
+
+	if (!hash)
+		return (
+			<Center h="100vh">
+				<Callout type="error" emoji="❌">
+					<Text fz={22} fw={700} c="white">
+						{"Something has gone very wrong!"}
+					</Text>
+				</Callout>
+			</Center>
+		);
+
 	const nativeData = NativesByJHash[hash] || NativesByHash[hash];
 
 	if (!nativeData)

@@ -32,17 +32,6 @@ export default function Shell({ children }: { children: React.ReactNode }) {
 		getNatives();
 	}, []);
 
-	/*
-	useEffect(() => {
-		if (location.hash) {
-			const element = document.getElementById(location.hash.slice(1));
-			if (element) {
-				element.scrollIntoView();
-			}
-		}
-	}, [location]);
-	*/
-
 	if (getAllCategories()?.length <= 0)
 		return (
 			<Center h="100vh">

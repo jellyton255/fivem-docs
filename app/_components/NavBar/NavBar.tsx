@@ -28,7 +28,7 @@ export default function Navbar() {
 				}
 			};
 
-			return <CategoryNavLink key={categoryName} categoryName={categoryName} categoryNatives={categoryNatives} isOpened={isOpened} searchTerm={searchTerm} location={location} setOpenedCategory={handleSetOpenedCategory} />;
+			return <CategoryNavLink key={categoryName} categoryName={categoryName} categoryNatives={categoryNatives} isOpened={isOpened} searchTerm={searchTerm} setOpenedCategory={handleSetOpenedCategory} />;
 		});
 	}, [data, openedCategories, searchTerm, pathname]);
 
