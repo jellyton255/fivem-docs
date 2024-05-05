@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Natives } from "../types/Natives";
+import { Natives } from "../_types/Natives";
 
 interface NativesState {
 	Natives: Record<string, Record<string, Natives>>;

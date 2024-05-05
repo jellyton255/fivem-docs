@@ -1,9 +1,8 @@
-import { NavLink, CSSProperties, rem, Loader, Title } from "@mantine/core";
-import { Location } from "react-router-dom";
-import { camelCaseFromSnakeCase, capitalizeFirstLetter } from "../../utils/stringUtils";
-import { Suspense, useEffect, useMemo, useState } from "react";
+import { NavLink, CSSProperties, rem, Title } from "@mantine/core";
+import { useMemo } from "react";
 import NativeNavLink from "./NativeNavLink";
 import { Virtuoso } from "react-virtuoso";
+import { camelCaseFromSnakeCase, capitalizeFirstLetter } from "@/app/_utils/stringUtils";
 
 const categoryStyle: CSSProperties = {
 	borderRadius: rem(6),

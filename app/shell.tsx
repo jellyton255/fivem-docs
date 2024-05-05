@@ -1,14 +1,11 @@
-import { AppShell, Center, Loader } from "@mantine/core";
-import { Routes, Route, useLocation } from "react-router";
-import Home from "./pages/Home";
-import { useEffect, useMemo } from "react";
-import NavBar from "./components/NavBar/NavBar";
-import { useNativesStore } from "./stores/NativesStore";
-import DocPage from "./components/DocPage/DocPage";
+"use client";
+import { Center, Loader, AppShell } from "@mantine/core";
+import { useEffect } from "react";
+import NavBar from "./_components/NavBar/NavBar";
+import { useNativesStore } from "./_stores/NativesStore";
 
-export default function App() {
-	const location = useLocation();
-	const { setNatives, Natives, getAllCategories } = useNativesStore();
+export default function Shell({ children }: { children: React.ReactNode }) {
+	const { setNatives, getAllCategories } = useNativesStore();
 
 	async function getNatives() {
 		const nativesRes = await fetch("https://runtime.fivem.net/doc/natives.json");
@@ -35,6 +32,7 @@ export default function App() {
 		getNatives();
 	}, []);
 
+	/*
 	useEffect(() => {
 		if (location.hash) {
 			const element = document.getElementById(location.hash.slice(1));
@@ -43,6 +41,7 @@ export default function App() {
 			}
 		}
 	}, [location]);
+	*/
 
 	if (getAllCategories()?.length <= 0)
 		return (
@@ -56,13 +55,7 @@ export default function App() {
 			<AppShell.Navbar>
 				<NavBar />
 			</AppShell.Navbar>
-
-			<AppShell.Main h="100%">
-				<Routes>
-					<Route path="/" element={<Home />} />
-					<Route path={`/docs/natives/`} element={<DocPage />} />
-				</Routes>
-			</AppShell.Main>
+			<AppShell.Main h="100%">{children}</AppShell.Main>
 		</AppShell>
 	);
 }

@@ -1,16 +1,16 @@
-import { TextInput, Code, Text, rem, AppShell, ScrollArea } from "@mantine/core";
+import { TextInput, Code, Text, AppShell, ScrollArea } from "@mantine/core";
 import { useMemo, useState } from "react";
-import { useNativesStore } from "../../stores/NativesStore";
-import { useLocation } from "react-router";
 import CategoryNavLink from "./CategoryNavLink";
 import { faMagnifyingGlass } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNativesStore } from "@/app/_stores/NativesStore";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
 	const { Natives } = useNativesStore();
 	const [openedCategories, setOpenedCategories] = useState<string[]>([]);
 	const [searchTerm, setSearchTerm] = useState("");
-	const location = useLocation();
+	const pathname = usePathname();
 
 	const data = useMemo(() => Object.entries(Natives), [Natives]);
 
@@ -30,7 +30,7 @@ export default function Navbar() {
 
 			return <CategoryNavLink key={categoryName} categoryName={categoryName} categoryNatives={categoryNatives} isOpened={isOpened} searchTerm={searchTerm} location={location} setOpenedCategory={handleSetOpenedCategory} />;
 		});
-	}, [data, openedCategories, searchTerm, location.pathname]);
+	}, [data, openedCategories, searchTerm, pathname]);
 
 	return (
 		<>

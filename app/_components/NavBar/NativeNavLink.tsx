@@ -1,7 +1,7 @@
+import { camelCaseFromSnakeCase } from "@/app/_utils/stringUtils";
 import { Text, NavLink, CSSProperties, rem } from "@mantine/core";
-import { NavLink as RouteLink, Location } from "react-router-dom";
-import { camelCaseFromSnakeCase } from "../../utils/stringUtils";
 import { memo } from "react";
+import NextLink from "next/link";
 
 const categoryStyle: CSSProperties = {
 	borderRadius: rem(6),
@@ -15,8 +15,8 @@ function NativeNavLink({ nativeHash, nativeData, formattedCategoryName, location
 			h={31}
 			key={nativeHash}
 			style={categoryStyle}
-			component={RouteLink}
-			to={"/docs/natives/?_" + nativeHash}
+			component={NextLink}
+			href={"/docs/natives/?_" + nativeHash}
 			active={location.pathname == "/docs/natives/" + formattedCategoryName + "/" + nativeHash}
 			label={
 				<Text fz={14} fw={500}>

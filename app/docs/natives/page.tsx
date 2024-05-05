@@ -1,17 +1,17 @@
+"use client";
 import { Flex, Title, Text, Stack, Divider, List, Badge, Code, Card, useMantineTheme, rem, Group, Tooltip, Center, Loader, Table, Anchor } from "@mantine/core";
-import { memo, useMemo, Suspense } from "react";
-import { useNativesStore } from "../../stores/NativesStore";
-import { CodeHighlight, CodeHighlightTabs } from "@mantine/code-highlight";
-import { camelCaseFromSnakeCase } from "../../utils/stringUtils";
+import { Suspense } from "react";
+import { CodeHighlight, CodeHighlightTabs, InlineCodeHighlight } from "@mantine/code-highlight";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { faTriangleExclamation } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import RealmIndicator from "../RealmIndicator";
-import { Natives } from "../../types/Natives";
-import { useLocation, useParams } from "react-router";
-import { Link } from "react-router-dom";
-import Callout from "../Callout";
+import NextLink from "next/link";
+import Callout from "@/app/_components/Callout";
+import RealmIndicator from "@/app/_components/RealmIndicator";
+import { camelCaseFromSnakeCase } from "@/app/_utils/stringUtils";
+import { useNativesStore } from "@/app/_stores/NativesStore";
+import "@mantine/code-highlight/styles.css";
 
 interface ParamProps {
 	name: string;
@@ -108,15 +108,14 @@ function DescriptionSection(props: { description: string }) {
 							);
 						},
 						code(props) {
-							console.log(props);
 							const { children, className } = props;
-							return className || (containsNewline(children as string) && <CodeHighlight w="fit-content" maw="100%" code={children as string} style={{ whiteSpace: "pre-wrap" }} withCopyButton={false} />) || <Code>{children}</Code>;
+							return className || (containsNewline(children as string) && <CodeHighlight w="100%" code={children as string} style={{ whiteSpace: "pre-wrap" }} withCopyButton={false} />) || <Code>{children}</Code>;
 						},
 						a(props) {
 							const { children, href } = props;
 
 							return (
-								<Anchor to={(href && replaceHashWithQuestionMark(href)) || ""} fz={16} style={{ whiteSpace: "pre-wrap" }} component={Link}>
+								<Anchor href={(href && replaceHashWithQuestionMark(href)) || ""} fz={16} style={{ whiteSpace: "pre-wrap" }} component={NextLink}>
 									{children}
 								</Anchor>
 							);
@@ -139,7 +138,7 @@ function ArgsSection(props: { params: ParamProps[] }) {
 			<List.Item
 				key={paramData.name + paramData.type}
 				icon={
-					<Badge color="orange.5" variant="light" size="lg" radius="md">
+					<Badge variant="light" size="lg" radius="md">
 						{index + 1}
 					</Badge>
 				}>
@@ -211,15 +210,14 @@ function ExamplesSection(props: { examples: { lang: string; code: string }[] }) 
 	);
 }
 
-function DocPage() {
-	const location = useLocation();
+export default function Page({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
 	const { NativesByHash, NativesByJHash } = useNativesStore();
-	const hash = location.search.substring(2);
+	const hash = Object.keys(searchParams)[0].substring(1);
 	const nativeData = NativesByJHash[hash] || NativesByHash[hash];
 
 	if (!nativeData)
 		return (
-			<Center h="90vh">
+			<Center h="100vh">
 				<Callout type="error" emoji="❌">
 					<Text fz={22} fw={700} c="white">
 						The native you're looking for doesn't exist!
@@ -243,7 +241,14 @@ function DocPage() {
 						{nativeData.hash}
 					</Text>
 				</Stack>
-				<CodeHighlight code={`${returnString} ${nativeName}(${getParamaterString(nativeData.params)})`} language="lua" copyLabel="Copy button code" copiedLabel="Copied!" />
+
+				<CodeHighlight
+					code={`${returnString} ${nativeName}(${getParamaterString(nativeData.params)})`}
+					style={{
+						whiteSpace: "pre-wrap",
+					}}
+					withCopyButton={false}
+				/>
 				<DescriptionSection description={nativeData.description} />
 				<ArgsSection params={nativeData.params} />
 				<ExamplesSection examples={nativeData.examples} />
@@ -251,5 +256,3 @@ function DocPage() {
 		</Flex>
 	);
 }
-
-export default memo(DocPage);
