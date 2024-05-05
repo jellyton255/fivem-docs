@@ -1,3 +1,5 @@
+import { ParamProps } from "../docs/natives/[hash]/page";
+
 // Capitalizes the first letter of a string and makes the rest lowercase
 const EXEMPTWORDS: Record<string, boolean> = {
 	DLC: true,
@@ -22,3 +24,21 @@ export const camelCaseFromSnakeCase = (str: string): string => {
 		.map((part, index) => (index === 0 ? capitalizeFirstLetter(part) : capitalizeFirstLetter(part)))
 		.join("");
 };
+
+export function getParamaterString(params: ParamProps[]) {
+	var paramsString = (params.length > 0 && " ") || "";
+	params.map((paramData, index) => {
+		paramsString += `${paramData.name}: ${paramData.type}`;
+		if (index != params.length - 1) paramsString += ", ";
+	});
+	paramsString += (params.length > 0 && " ") || "";
+	return paramsString;
+}
+
+export function replaceHashWithQuestionMark(inputString: string) {
+	return inputString.replace(/#/g, "/");
+}
+
+export function containsNewline(inputString: string) {
+	return inputString.includes("\n");
+}
