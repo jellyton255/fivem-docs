@@ -220,7 +220,7 @@ export default function Page({ searchParams }: { searchParams: { [key: string]: 
 			<Center h="100vh">
 				<Callout type="error" emoji="❌">
 					<Text fz={22} fw={700} c="white">
-						The native you're looking for doesn't exist!
+						{"The native you're looking for doesn't exist!"}
 					</Text>
 				</Callout>
 			</Center>
