@@ -52,7 +52,7 @@ export default function Navbar() {
 					Developer Reference
 				</Text>
 			</AppShell.Section>
-			<AppShell.Section grow w="95%" mx="auto" component={ScrollArea} scrollbarSize={6}>
+			<AppShell.Section grow w="95%" mx="auto" my={10} component={ScrollArea} scrollbarSize={6}>
 				{navRoutes}
 			</AppShell.Section>
 		</>
