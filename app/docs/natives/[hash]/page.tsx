@@ -10,37 +10,6 @@ import { DescriptionSection, ArgsSection, ExamplesSection } from "./_components/
 import "@mantine/code-highlight/styles.css";
 import type { Metadata } from "next";
 
-type Props = {
-	params: { hash: string };
-};
-
-export function generateMetadata({ params }: Props): Metadata {
-	const { NativesByHash, NativesByJHash } = useNativesStore();
-
-	const hash = params?.hash?.substring(1);
-
-	if (!hash)
-		return {
-			title: "Native Not Found | FiveM Docs",
-			description: "FiveM documentation for natives. Not affiliated with Cfx.re or Rockstar Games.",
-		};
-
-	const nativeData = NativesByJHash[hash] || NativesByHash[hash];
-
-	if (!nativeData)
-		return {
-			title: "Native Not Found | FiveM Docs",
-			description: "FiveM documentation for natives. Not affiliated with Cfx.re or Rockstar Games.",
-		};
-
-	const nativeName = (nativeData.name && camelCaseFromSnakeCase(nativeData.name)) || nativeData.hash;
-
-	return {
-		title: nativeName + " | FiveM Docs",
-		description: nativeData.description || "FiveM documentation for natives. Not affiliated with Cfx.re or Rockstar Games.",
-	};
-}
-
 export interface ParamProps {
 	name: string;
 	type: string;
