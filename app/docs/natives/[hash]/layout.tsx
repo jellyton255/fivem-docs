@@ -76,20 +76,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const URLParams: URLParams = {
 		title: "BreakOffVehicleWheel",
 		realm: capitalizeFirstLetter(nativeData.apiset || "Client"),
-		description: nativeData?.description?.slice(0, 250) + "..." || "This page lacks a native description! If you have any information on this native, consider contributing!",
+		description: nativeData?.description?.slice(0, 500) + ((nativeData?.description.length > 500 && "...") || "") || "FiveM documentation for natives. Not affiliated with Cfx.re or Rockstar Games.",
 		namespace: nativeData.ns,
 	};
 
 	const url = generateApiUrl(baseURL + "/api/og", URLParams);
 
-	console.log(url);
-
 	return {
 		title: nativeName,
-		description: nativeData?.description?.slice(0, 250) + "..." || "FiveM documentation for natives. Not affiliated with Cfx.re or Rockstar Games.",
 		openGraph: {
 			title: nativeName,
-			description: nativeData?.description?.slice(0, 250) + ((nativeData?.description.length > 250 && "...") || "") || "FiveM documentation for natives. Not affiliated with Cfx.re or Rockstar Games.",
 			images: [
 				{
 					url: url,
