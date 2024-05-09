@@ -74,7 +74,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const nativeName = (nativeData.name && camelCaseFromSnakeCase(nativeData.name)) || nativeData.hash;
 
 	const URLParams: URLParams = {
-		title: "BreakOffVehicleWheel",
+		title: nativeData.name,
 		realm: capitalizeFirstLetter(nativeData.apiset || "Client"),
 		description: nativeData?.description?.slice(0, 500) + ((nativeData?.description.length > 500 && "...") || "") || "FiveM documentation for natives. Not affiliated with Cfx.re or Rockstar Games.",
 		namespace: nativeData.ns,
