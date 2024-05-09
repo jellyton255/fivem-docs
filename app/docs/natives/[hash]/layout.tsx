@@ -1,11 +1,38 @@
 import { getNatives } from "@/app/_data/natives";
 import { Natives } from "@/app/_types/Natives";
-import { camelCaseFromSnakeCase } from "@/app/_utils/stringUtils";
+import getBaseURL from "@/app/_utils/getBaseURL";
+import { camelCaseFromSnakeCase, capitalizeFirstLetter } from "@/app/_utils/stringUtils";
 import { Metadata } from "next";
 
 type Props = {
 	params: { hash: string };
 };
+
+interface URLParams {
+	title: string;
+	realm: string;
+	description: string;
+	namespace: string; // Adding the namespace parameter
+}
+
+/**
+ * Encodes a parameter object into a URL query string.
+ */
+function encodeQueryParams(params: URLParams): string {
+	return Object.keys(params)
+		.map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(params[key]))
+		.join("&");
+}
+
+/**
+ * Generates a URL for the API with specified parameters.
+ */
+function generateApiUrl(baseURL: string, params: URLParams): string {
+	const queryString = encodeQueryParams(params);
+	return `${baseURL}?${queryString}`;
+}
+
+const baseURL = getBaseURL();
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const natives = await getNatives();
@@ -46,11 +73,31 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 	const nativeName = (nativeData.name && camelCaseFromSnakeCase(nativeData.name)) || nativeData.hash;
 
+	const URLParams: URLParams = {
+		title: "BreakOffVehicleWheel",
+		realm: capitalizeFirstLetter(nativeData.apiset || "Client"),
+		description: nativeData?.description?.slice(0, 250) + "..." || "This page lacks a native description! If you have any information on this native, consider contributing!",
+		namespace: nativeData.ns,
+	};
+
+	const url = generateApiUrl(baseURL, URLParams);
+
+	console.log(url);
+
 	return {
 		title: nativeName,
-		description: nativeData?.description?.slice(0, 50) + "..." || "FiveM documentation for natives. Not affiliated with Cfx.re or Rockstar Games.",
+		description: nativeData?.description?.slice(0, 250) + "..." || "FiveM documentation for natives. Not affiliated with Cfx.re or Rockstar Games.",
 		openGraph: {
 			title: nativeName,
+			description: nativeData?.description?.slice(0, 250) + ((nativeData?.description.length > 250 && "...") || "") || "FiveM documentation for natives. Not affiliated with Cfx.re or Rockstar Games.",
+			images: [
+				{
+					url: url,
+					width: 1200,
+					height: 600,
+					alt: nativeName,
+				},
+			],
 		},
 	};
 }

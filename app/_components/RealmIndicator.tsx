@@ -2,10 +2,10 @@ import { Box, Tooltip, useMantineTheme } from "@mantine/core";
 import { capitalizeFirstLetter } from "../_utils/stringUtils";
 
 type Realm = "client" | "server" | "shared";
-const realmMapper: Record<Realm, string> = {
+type RealmKeys = "client" | "server";
+const realmMapper: Record<RealmKeys, string> = {
 	client: "orange",
 	server: "blue",
-	shared: "green",
 };
 
 const gradient = `linear-gradient(
