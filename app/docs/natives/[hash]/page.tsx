@@ -8,7 +8,6 @@ import { camelCaseFromSnakeCase, getParamaterString } from "@/app/_utils/stringU
 import { useNativesStore } from "@/app/_stores/NativesStore";
 import { DescriptionSection, ArgsSection, ExamplesSection } from "./_components/Sections";
 import "@mantine/code-highlight/styles.css";
-import type { Metadata } from "next";
 
 export interface ParamProps {
 	name: string;

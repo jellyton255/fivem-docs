@@ -1,5 +1,4 @@
 import { getNatives } from "@/app/_data/natives";
-import { useNativesStore } from "@/app/_stores/NativesStore";
 import { Natives } from "@/app/_types/Natives";
 import { camelCaseFromSnakeCase } from "@/app/_utils/stringUtils";
 import { Metadata } from "next";
@@ -27,23 +26,32 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 	if (!hash)
 		return {
-			title: "Native Not Found | FiveM Docs",
+			title: "Native Not Found",
 			description: "FiveM documentation for natives. Not affiliated with Cfx.re or Rockstar Games.",
+			openGraph: {
+				title: "Native Not Found",
+			},
 		};
 
 	const nativeData = nativesByJHash[hash] || nativesByHash[hash];
 
 	if (!nativeData)
 		return {
-			title: "Native Not Found | FiveM Docs",
+			title: "Native Not Found",
 			description: "FiveM documentation for natives. Not affiliated with Cfx.re or Rockstar Games.",
+			openGraph: {
+				title: "Native Not Found",
+			},
 		};
 
 	const nativeName = (nativeData.name && camelCaseFromSnakeCase(nativeData.name)) || nativeData.hash;
 
 	return {
-		title: nativeName + " | FiveM Docs",
-		description: nativeData.description || "FiveM documentation for natives. Not affiliated with Cfx.re or Rockstar Games.",
+		title: nativeName,
+		description: nativeData?.description?.slice(0, 50) + "..." || "FiveM documentation for natives. Not affiliated with Cfx.re or Rockstar Games.",
+		openGraph: {
+			title: nativeName,
+		},
 	};
 }
 
