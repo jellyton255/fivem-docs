@@ -4,6 +4,9 @@ import { useEffect } from "react";
 import NavBar from "./_components/NavBar/NavBar";
 import { useNativesStore } from "./_stores/NativesStore";
 import { getNatives } from "./_data/natives";
+import getBaseURL from "./_utils/getBaseURL";
+
+const baseURL = getBaseURL();
 
 export default function Shell({ children }: { children: React.ReactNode }) {
 	const { setNatives, getAllCategories } = useNativesStore();
@@ -12,7 +15,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
 		if (getAllCategories()?.length > 0) return;
 
 		const fetchData = async () => {
-			setNatives(await getNatives());
+			setNatives(await fetch(baseURL + "/api/natives").then((res) => res.json()));
 		};
 
 		// call the function

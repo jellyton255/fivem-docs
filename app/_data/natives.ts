@@ -1,3 +1,6 @@
+var CachedNatives = null;
+var TimeCached = 0;
+
 async function getClientNatives() {
 	const nativesRes = await fetch("https://runtime.fivem.net/doc/natives.json");
 
@@ -19,7 +22,12 @@ async function getCfxNatives() {
 }
 
 export async function getNatives() {
-	const [clientNatives, cfxNatives] = await Promise.all([getClientNatives(), getCfxNatives()]);
+	if (!CachedNatives || TimeCached + 1000 * 60 * 24 < Date.now()) {
+		console.log("Fetching natives from FiveM API...");
+		const [clientNatives, cfxNatives] = await Promise.all([getClientNatives(), getCfxNatives()]);
+		CachedNatives = { ...cfxNatives, ...clientNatives };
+		TimeCached = Date.now();
+	}
 
-	return { ...cfxNatives, ...clientNatives };
+	return CachedNatives;
 }

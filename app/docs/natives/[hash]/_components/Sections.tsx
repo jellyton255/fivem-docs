@@ -12,8 +12,6 @@ export function DescriptionSection(props: { description: string }) {
 	const { description } = props;
 	const theme = useMantineTheme();
 
-	console.log(description);
-
 	if (!description || description == "") {
 		const parsedColor = theme.variantColorResolver({
 			color: "yellow.5",
@@ -82,8 +80,6 @@ export function DescriptionSection(props: { description: string }) {
 						},
 						code(props) {
 							const { children, className } = props;
-							console.log(props);
-
 							const isMultiline = className || containsNewline(children as string);
 
 							return (isMultiline && <CodeHighlight w="100%" code={children as string} style={{ whiteSpace: "pre-wrap" }} withCopyButton={false} />) || <Code>{children}</Code>;
