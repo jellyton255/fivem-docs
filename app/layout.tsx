@@ -9,8 +9,24 @@ import "@mantine/spotlight/styles.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
-	title: "FiveM Docs",
+	title: {
+		template: "%s | FiveM Docs",
+		default: "FiveM Docs",
+	},
 	description: "FiveM documentation for natives. Not affiliated with Cfx.re or Rockstar Games.",
+	keywords: ["FiveM", "server", "gta", "gtav", "gta5", "gta v", "gta 5", "fivem", "gta 6", "gta vi", "gta six"],
+	openGraph: {
+		title: {
+			template: "%s | FiveM Docs",
+			default: "FiveM Docs",
+		},
+		siteName: "FiveM Docs",
+		url: new URL("https://fivemdocs.jellyton.me/"),
+	},
+	robots: {
+		index: true,
+		follow: true,
+	},
 };
 
 export default function RootLayout({
