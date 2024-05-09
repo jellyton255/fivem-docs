@@ -80,7 +80,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 		namespace: nativeData.ns,
 	};
 
-	const url = generateApiUrl(baseURL + "api/og", URLParams);
+	const url = generateApiUrl(baseURL + "/api/og", URLParams);
 
 	console.log(url);
 
