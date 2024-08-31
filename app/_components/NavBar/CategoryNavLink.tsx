@@ -1,53 +1,81 @@
-import { NavLink, CSSProperties, rem, Title } from "@mantine/core";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import NativeNavLink from "./NativeNavLink";
 import { Virtuoso } from "react-virtuoso";
 import { camelCaseFromSnakeCase, capitalizeFirstLetter } from "@/app/_utils/stringUtils";
-
-const categoryStyle: CSSProperties = {
-	borderRadius: rem(6),
-	padding: `${rem(6)} ${rem(12)}`,
-	transition: "all 0.3s ease", // Customize as needed
-};
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { faChevronLeft } from "@fortawesome/pro-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { cn } from "@/lib/utils";
 
 type CategoryNavLinkProps = {
-	categoryName: string;
-	categoryNatives: Record<string, any>;
-	isOpened: boolean;
-	searchTerm: string;
-	setOpenedCategory: (categoryName: string) => void; // Updated type
+  categoryName: string;
+  categoryNatives: Record<string, any>;
+  isOpened: boolean;
+  searchTerm: string;
+  setOpenedCategory: (categoryName: string) => void;
+  isLast: boolean;
 };
 
-const clamp = (val: number, min: number, max: number) => Math.min(Math.max(val, min), max);
+const maxVisibleItems = 20;
+const itemHeightRem = 1.75;
 
-function CategoryNavLink({ categoryName, categoryNatives, isOpened, setOpenedCategory, searchTerm }: CategoryNavLinkProps) {
-	isOpened = isOpened || searchTerm?.length > 1;
+export default function CategoryNavLink({
+  categoryName,
+  categoryNatives,
+  isOpened,
+  setOpenedCategory,
+  searchTerm,
+  isLast,
+}: CategoryNavLinkProps) {
+  isOpened = isOpened;
 
-	const filteredNatives = useMemo(
-		() => (searchTerm ? Object.entries(categoryNatives).filter(([_, nativeData]) => nativeData.name && camelCaseFromSnakeCase(nativeData.name).toLowerCase().includes(searchTerm.toLowerCase())) : Object.entries(categoryNatives)),
-		[searchTerm]
-	);
+  const filteredNatives = useMemo(
+    () =>
+      searchTerm
+        ? Object.entries(categoryNatives).filter(
+            ([_, nativeData]) => nativeData.name && camelCaseFromSnakeCase(nativeData.name).toLowerCase().includes(searchTerm.toLowerCase())
+          )
+        : Object.entries(categoryNatives),
+    [searchTerm]
+  );
 
-	// Only render the category if all natives are filtered out
-	if (searchTerm && filteredNatives.length === 0) {
-		return [];
-	}
+  useEffect(() => {
+    if (!isOpened && searchTerm?.length > 1 && filteredNatives.length > 0) {
+      setOpenedCategory(categoryName);
+    }
+  }, [searchTerm]);
 
-	const listHeight = rem(clamp(filteredNatives.length, filteredNatives.length, 20) * 31);
+  if (searchTerm && filteredNatives.length === 0) {
+    return [];
+  }
 
-	return (
-		<NavLink key={categoryName} label={<Title order={5}>{capitalizeFirstLetter(categoryName)}</Title>} opened={isOpened} onChange={() => setOpenedCategory(categoryName)} style={categoryStyle}>
-			{(isOpened && (
-				<>
-					<Virtuoso
-						style={{ width: "95%", height: listHeight }}
-						data={filteredNatives}
-						itemContent={(index, [nativeHash, nativeData]) => <NativeNavLink key={nativeHash} nativeHash={nativeData.jhash || nativeHash} nativeData={nativeData} />}
-					/>
-				</>
-			)) || <></>}
-		</NavLink>
-	);
+  const listHeight = Math.min(filteredNatives.length, maxVisibleItems) * itemHeightRem;
+
+  return (
+    <>
+      <Button
+        onClick={() => setOpenedCategory(categoryName)}
+        variant="secondary"
+        size="thin"
+        className="flex h-fit w-full scroll-m-20 justify-between gap-2 rounded-md bg-transparent px-5 text-start font-bold tracking-tight transition-all"
+      >
+        <div>
+          {capitalizeFirstLetter(categoryName)} [{filteredNatives.length}]
+        </div>
+        {<FontAwesomeIcon icon={faChevronLeft} className={cn("text-neutral-500 transition-all", isOpened && "-rotate-90")} />}
+      </Button>
+      {isOpened && (
+        <Virtuoso
+          className="max-h-60 w-[95%] shrink"
+          style={{
+            height: listHeight + "rem",
+          }}
+          data={filteredNatives}
+          itemContent={(index, [nativeHash, nativeData]) => <NativeNavLink key={nativeHash} nativeData={nativeData} />}
+        />
+      )}
+      {!isLast && <Separator />}
+    </>
+  );
 }
-
-export default CategoryNavLink;

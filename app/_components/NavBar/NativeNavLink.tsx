@@ -1,33 +1,30 @@
 import { camelCaseFromSnakeCase } from "@/app/_utils/stringUtils";
-import { Text, NavLink, CSSProperties, rem } from "@mantine/core";
 import { memo } from "react";
-import NextLink from "next/link";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Natives } from "@/app/_types/Natives";
+import { Button } from "@/components/ui/button";
 
-const categoryStyle: CSSProperties = {
-	borderRadius: rem(6),
-	padding: `${rem(6)} ${rem(12)}`,
-	transition: "all 0.3s ease", // Customize as needed
-};
+function NativeNavLink({ nativeData }: { nativeData: Natives }) {
+  const pathname = usePathname();
 
-function NativeNavLink({ nativeHash, nativeData }: { nativeHash: string; nativeData: any }) {
-	const pathname = usePathname();
-
-	return (
-		<NavLink
-			h={31}
-			key={nativeHash}
-			style={categoryStyle}
-			component={NextLink}
-			href={"/docs/natives/_" + nativeHash}
-			active={pathname == "/docs/natives/_" + nativeHash}
-			label={
-				<Text fz={14} fw={500}>
-					{(nativeData.name && camelCaseFromSnakeCase(nativeData?.name)) || nativeHash}
-				</Text>
-			}
-		/>
-	);
+  return (
+    <Button
+      variant="secondary"
+      size="thin"
+      asChild
+      data-active={pathname == "/docs/natives/_" + (nativeData.jhash || nativeData.hash)}
+      className="w-full scroll-m-20 justify-start overflow-hidden text-ellipsis rounded-md bg-transparent pl-8 text-start font-semibold tracking-tight transition-all data-[active=true]:bg-neutral-100 data-[active=true]:text-neutral-950"
+    >
+      <Link
+        key={nativeData.jhash || nativeData.hash}
+        href={"/docs/natives/_" + (nativeData.jhash || nativeData.hash)}
+        className="overflow-hidden text-ellipsis"
+      >
+        {(nativeData.name && camelCaseFromSnakeCase(nativeData?.name)) || nativeData.jhash || nativeData.hash}
+      </Link>
+    </Button>
+  );
 }
 
 export default memo(NativeNavLink);
