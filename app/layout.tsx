@@ -1,57 +1,43 @@
 import type { Metadata } from "next";
-import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import Shell from "./shell";
-import "@mantine/core/styles.css";
-import "@mantine/code-highlight/styles.css";
-import "@mantine/spotlight/styles.css";
 import "./globals.css";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { config } from "@fortawesome/fontawesome-svg-core";
+config.autoAddCss = false;
 
 export const metadata: Metadata = {
-	title: {
-		template: "%s | FiveM Docs",
-		default: "FiveM Docs",
-	},
-	description: "FiveM documentation for natives. Not affiliated with Cfx.re or Rockstar Games.",
-	keywords: ["FiveM", "server", "gta", "gtav", "gta5", "gta v", "gta 5", "fivem", "gta 6", "gta vi", "gta six"],
-	openGraph: {
-		title: {
-			template: "%s | FiveM Docs",
-			default: "FiveM Docs",
-		},
-		siteName: "FiveM Docs",
-		url: new URL("https://fivemdocs.jellyton.me/"),
-	},
-	robots: {
-		index: true,
-		follow: true,
-	},
+  title: {
+    template: "%s | FiveM Docs",
+    default: "FiveM Docs",
+  },
+  description: "FiveM documentation for natives. Not affiliated with Cfx.re or Rockstar Games.",
+  keywords: ["FiveM", "server", "gta", "gtav", "gta5", "gta v", "gta 5", "fivem", "gta 6", "gta vi", "gta six"],
+  openGraph: {
+    title: {
+      template: "%s | FiveM Docs",
+      default: "FiveM Docs",
+    },
+    siteName: "FiveM Docs",
+    url: new URL("https://fivemdocs.jellyton.me/"),
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
-export default function RootLayout({
-	children,
+export default async function RootLayout({
+  children,
 }: Readonly<{
-	children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-	return (
-		<html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
-			<head>
-				<ColorSchemeScript forceColorScheme="dark" />
-			</head>
-			<body>
-				<MantineProvider
-					defaultColorScheme="dark"
-					theme={{
-						primaryColor: "cfx",
-						colors: {
-							cfx: ["#ffe8f2", "#ffcfdf", "#fe9dbc", "#fc6897", "#fa3c78", "#f92064", "#fa0e5a", "#df004b", "#c80041", "#b00037"],
-							dark: ["#C1C2C5", "#A6A7AB", "#909296", "#5c5f66", "#373A40", "#2C2E33", "#25262b", "#131313", "#141517", "#101113"],
-						},
-					}}>
-					<Shell>{children}</Shell>
-				</MantineProvider>
-			</body>
-		</html>
-	);
+  return (
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
+      <body>
+        <Shell>{children}</Shell>
+      </body>
+    </html>
+  );
 }
