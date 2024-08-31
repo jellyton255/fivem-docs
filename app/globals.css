@@ -1,29 +1,98 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@tailwind variants;
 
-@layer base, mantine, components;
+@layer base {
+  :root {
+    --background: 0 0% 6%;
+    --foreground: 0 0% 98%;
 
-:root {
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	-webkit-text-size-adjust: 100%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+
+    --radius: 0.5rem;
+
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+
+    --color-everfall-50: 193 194 197;
+    --color-everfall-100: 166 167 171;
+    --color-everfall-200: 144 146 150;
+    --color-everfall-300: 92 95 102;
+    --color-everfall-400: 55 58 64;
+    --color-everfall-500: 44 46 51;
+    --color-everfall-600: 40 41 44;
+    --color-everfall-650: 36 37 40;
+    --color-everfall-700: 25 25 26;
+    --color-everfall-800: 18 19 19;
+    --color-everfall-900: 9 9 9;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  p {
+    @apply m-0;
+  }
+}
+
+html {
+  scroll-padding-top: 4.5rem;
+}
+
+@keyframes highlight {
+  from {
+    background-color: rgb(87 87 87);
+  }
+  to {
+    background-color: transparent;
+  }
 }
 
 /* width */
 ::-webkit-scrollbar {
-	width: 6px;
-	border-radius: 3px;
+  width: 6px;
+  border-radius: 3px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-	background: rgb(46, 46, 46);
-	border-radius: 3px;
+  background: transparent;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-	background: #888;
-	border-radius: 6px;
+  background: #888;
+  border-radius: 6px;
 }
