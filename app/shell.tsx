@@ -1,50 +1,16 @@
-"use client";
-import { Text, Center, Loader, AppShell, rem, Group } from "@mantine/core";
-import { useEffect } from "react";
-import NavBar from "./_components/NavBar/NavBar";
-import { useNativesStore } from "./_stores/NativesStore";
-import Footer from "./_components/Footer/Footer";
-import { useHeadroom } from "@mantine/hooks";
-import getBaseURL from "./_utils/getBaseURL";
+import Navbar from "./_components/Navbar/Navbar";
+import { getNatives } from "./_utils/getNatives";
 
-const baseURL = getBaseURL();
+export default async function Shell({ children }: { children: React.ReactNode }) {
+  const natives = await getNatives();
 
-export default function Shell({ children }: { children: React.ReactNode }) {
-	const { setNatives, getAllCategories } = useNativesStore();
-	const pinned = useHeadroom({ fixedAt: 60 });
-
-	useEffect(() => {
-		if (getAllCategories()?.length > 0) return;
-
-		const fetchData = async () => {
-			setNatives(await fetch(baseURL + "/api/natives").then((res) => res.json()));
-		};
-
-		fetchData().catch(console.error);
-	}, []);
-
-	if (getAllCategories()?.length <= 0)
-		return (
-			<Center h="100vh">
-				<Loader />
-			</Center>
-		);
-
-	return (
-		<AppShell navbar={{ width: 350, breakpoint: "sm" }} header={{ height: 60, collapsed: !pinned, offset: true }}>
-			<AppShell.Header>
-				<Group h="100%" align="center" px={20} py={6}>
-					<Text fz={30} fw={700} c="white">
-						Native Documentation
-					</Text>
-				</Group>
-			</AppShell.Header>
-
-			<AppShell.Navbar>
-				<NavBar />
-			</AppShell.Navbar>
-
-			<AppShell.Main pt={`calc(${rem(60)} + var(--mantine-spacing-md))`} /*pb={`calc(${rem(220)} + var(--mantine-spacing-md))`}*/>{children}</AppShell.Main>
-		</AppShell>
-	);
+  return (
+    <div className="flex h-screen w-screen flex-col overflow-x-hidden">
+      <h1 className="scroll-m-20 p-2 px-4 text-3xl font-extrabold tracking-tight lg:text-4xl">Native Documentation</h1>
+      <div className="flex h-0 w-full grow px-4 pb-4">
+        <Navbar natives={natives} />
+        <div className="grow">{children}</div>
+      </div>
+    </div>
+  );
 }
