@@ -1,184 +1,145 @@
-import { containsNewline, replaceHashWithQuestionMark } from "@/app/_utils/stringUtils";
+import { containsNewline, replaceHashWithQuestionMark, replaceParamType } from "@/app/_utils/stringUtils";
 import { faTriangleExclamation } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { CodeHighlight, CodeHighlightTabs } from "@mantine/code-highlight";
-import { Text, useMantineTheme, Divider, Card, Flex, rem, Stack, Title, Table, Code, Anchor, List, Badge } from "@mantine/core";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { ParamProps } from "../page";
-import NextLink from "next/link";
+import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
+import hljs from "highlight.js/lib/core";
+import javascript from "highlight.js/lib/languages/javascript";
+import lua from "highlight.js/lib/languages/lua";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import "highlight.js/styles/monokai.css";
 
-export function DescriptionSection(props: { description: string }) {
-	const { description } = props;
-	const theme = useMantineTheme();
+hljs.registerLanguage("javascript", javascript);
+hljs.registerLanguage("lua", lua);
 
-	if (!description || description == "") {
-		const parsedColor = theme.variantColorResolver({
-			color: "yellow.5",
-			variant: "light",
-			theme: theme,
-		});
+export async function DescriptionSection({ description }: { description: string }) {
+  if (!description || description == "")
+    return (
+      <>
+        <Separator className="my-2" />
+        <div className="flex items-center justify-center gap-4 rounded-sm bg-yellow-500/10 p-6">
+          <FontAwesomeIcon size="2xl" className="text-yellow-500" icon={faTriangleExclamation} />
+          <div className="scroll-m-20 text-2xl font-bold leading-none tracking-tight text-neutral-100">
+            This page lacks a native description! If you have any information on this native, consider contributing!
+          </div>
+        </div>
+      </>
+    );
 
-		return (
-			<>
-				<Divider my={10} />
-				<Card bg={parsedColor.background}>
-					<Flex align="center" gap={16}>
-						<FontAwesomeIcon
-							style={{
-								color: parsedColor.color,
-								width: rem(50),
-								height: rem(50),
-							}}
-							icon={faTriangleExclamation}
-						/>
-						<Text fz={22} fw={700} c="white">
-							This page lacks a native description! If you have any information on this native, consider contributing!
-						</Text>
-					</Flex>
-				</Card>
-			</>
-		);
-	}
+  return (
+    <>
+      <Separator className="my-2" />
+      <div>
+        <h2 className="mb-2 scroll-m-20 text-3xl font-bold tracking-tight">Description</h2>
+        <Markdown
+          remarkPlugins={[[remarkGfm]]}
+          components={{
+            code(props) {
+              const { children, className } = props;
+              const isMultiline = className || containsNewline(children as string);
 
-	return (
-		<>
-			<Divider my={10} />
-			<Stack gap={0}>
-				<Title order={1} mb={2}>
-					Description
-				</Title>
-				<Markdown
-					remarkPlugins={[[remarkGfm]]}
-					components={{
-						p(props) {
-							const { children } = props;
-							return (
-								<Text
-									style={{
-										whiteSpace: "pre-wrap",
-									}}>
-									{children}
-								</Text>
-							);
-						},
-						table(props) {
-							const { children } = props;
-							return (
-								<Card m={12} pt={12} bg="#1b1b1b">
-									<Table>{children}</Table>
-								</Card>
-							);
-						},
-						th(props) {
-							const { children } = props;
-							return (
-								<Table.Th fz={16} px={0}>
-									{children}
-								</Table.Th>
-							);
-						},
-						code(props) {
-							const { children, className } = props;
-							const isMultiline = className || containsNewline(children as string);
+              if (isMultiline) {
+                const highlight = hljs.highlightAuto(children as string);
 
-							return (isMultiline && <CodeHighlight w="100%" code={children as string} style={{ whiteSpace: "pre-wrap" }} withCopyButton={false} />) || <Code>{children}</Code>;
-						},
-						a(props) {
-							const { children, href } = props;
+                return (
+                  <section
+                    dangerouslySetInnerHTML={{
+                      __html: highlight.value,
+                    }}
+                  />
+                );
+              }
 
-							return (
-								<Anchor href={(href && "/docs/natives/" + replaceHashWithQuestionMark(href)) || ""} fz={16} style={{ whiteSpace: "pre-wrap" }} component={NextLink}>
-									{children}
-								</Anchor>
-							);
-						},
-					}}>
-					{description}
-				</Markdown>
-			</Stack>
-		</>
-	);
+              return <code>{children}</code>;
+            },
+            a(props) {
+              const { children, href } = props;
+
+              return (
+                <Link
+                  className="font-semibold underline"
+                  href={(href && "/docs/natives/" + replaceHashWithQuestionMark(href)) || ""}
+                  style={{ whiteSpace: "pre-wrap" }}
+                >
+                  {children}
+                </Link>
+              );
+            },
+          }}
+        >
+          {description}
+        </Markdown>
+      </div>
+    </>
+  );
 }
 
-export function ArgsSection(props: { params: ParamProps[] }) {
-	const { params } = props;
+export function ArgsSection({ params }: { params: ParamProps[] }) {
+  if (!params || params.length == 0) return null;
 
-	if (!params || params.length == 0) return <></>;
+  const listItems = params.map((paramData, index) => {
+    return (
+      <div className="flex items-center gap-3" key={paramData.name + paramData.type}>
+        <Badge variant="outline" className="border-2 text-lg font-bold">
+          {index + 1}
+        </Badge>
 
-	const listItems = params.map((paramData, index) => {
-		return (
-			<List.Item
-				key={paramData.name + paramData.type}
-				icon={
-					<Badge variant="light" size="lg" radius="md">
-						{index + 1}
-					</Badge>
-				}>
-				<Code fz={16}>
-					{paramData.name}: {paramData.type}
-				</Code>
-				{paramData.description && (
-					<Text fz={15} c="dimmed">
-						<Markdown
-							components={{
-								p(props) {
-									const { node, children, ...rest } = props;
-									return <Text>{children}</Text>;
-								},
-								code(props) {
-									const { children } = props;
-									return (
-										<Code
-											style={{
-												whiteSpace: "pre-wrap",
-											}}>
-											{children}
-										</Code>
-									);
-								},
-							}}>
-							{paramData.description}
-						</Markdown>
-					</Text>
-				)}
-			</List.Item>
-		);
-	});
+        <div key={paramData.name + paramData.type}>
+          <code className="">
+            {paramData.name}: {replaceParamType(paramData.type)}
+          </code>
+          {paramData.description && <Markdown>{paramData.description}</Markdown>}
+        </div>
+      </div>
+    );
+  });
 
-	return (
-		<>
-			<Divider my={10} />
-			<Stack gap={0}>
-				<Title order={1} mb={20}>
-					Arguments
-				</Title>
-				<List spacing="xs" size="sm" center>
-					{listItems}
-				</List>
-			</Stack>
-		</>
-	);
+  return (
+    <>
+      <Separator className="my-2" />
+      <div className="flex flex-col">
+        <h2 className="mb-2 scroll-m-20 text-3xl font-bold tracking-tight">Arguments</h2>
+        <div className="flex flex-col gap-2">{listItems}</div>
+      </div>
+    </>
+  );
 }
 
-export function ExamplesSection(props: { examples: { lang: string; code: string }[] }) {
-	const { examples } = props;
+export function ExamplesSection({ examples }: { examples: { lang: string; code: string }[] }) {
+  if (!examples || examples.length == 0) return null;
 
-	if (!examples || examples.length == 0) return <></>;
+  const exampleBlocks = examples.map((example) => {
+    const highlight = hljs.highlight(example.code, { language: example.lang });
 
-	const exampleBlocks = examples.map((example) => {
-		return { code: example.code, language: example.lang, fileName: example.lang };
-	});
+    return { code: highlight.value, language: example.lang };
+  });
 
-	return (
-		<>
-			<Divider my={10} />
-			<Stack gap={0}>
-				<Title order={1} mb={20}>
-					Examples
-				</Title>
-				<CodeHighlightTabs w="fit-content" code={exampleBlocks} />
-			</Stack>
-		</>
-	);
+  return (
+    <>
+      <Separator className="my-2" />
+      <h2 className="mb-2 scroll-m-20 text-3xl font-bold tracking-tight">Examples</h2>
+      <Tabs defaultValue={exampleBlocks[0].language} className="w-full">
+        <TabsList>
+          {exampleBlocks.map((example) => (
+            <TabsTrigger key={example.language} value={example.language}>
+              {example.language}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+        {exampleBlocks.map((example) => (
+          <TabsContent key={example.language} value={example.language}>
+            <pre
+              dangerouslySetInnerHTML={{
+                __html: example.code,
+              }}
+            />
+          </TabsContent>
+        ))}
+      </Tabs>
+    </>
+  );
 }
