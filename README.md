@@ -1,5 +1,4 @@
-# FiveM Documentation in Mantine
-
+# FiveM Documentation
 This is just a side project I wanted to do since most of my work in React is in the form of FiveM resources, so I wanted to put my React knowledge into making an actual website. I also wanted a site that had a dark theme so it was easier on the eyes at night.
 
 # Contributing
