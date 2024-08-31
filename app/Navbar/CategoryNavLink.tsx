@@ -1,6 +1,5 @@
 import { useEffect, useMemo } from "react";
 import NativeNavLink from "./NativeNavLink";
-import { Virtuoso } from "react-virtuoso";
 import { camelCaseFromSnakeCase, capitalizeFirstLetter } from "@/app/_utils/stringUtils";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -66,16 +65,29 @@ export default function CategoryNavLink({
         {<FontAwesomeIcon icon={faChevronLeft} className={cn("text-neutral-500 transition-all", isOpened && "-rotate-90")} />}
       </Button>
       {isOpened && (
-        <Virtuoso
-          className="max-h-60 w-[95%] shrink"
+        <div
+          className="max-h-60 w-[95%] shrink overflow-y-auto"
           style={{
-            height: listHeight + "rem",
+            height: `${listHeight}rem`,
           }}
-          data={filteredNatives}
-          itemContent={(index, [nativeHash, nativeData]) => <NativeNavLink key={nativeHash} nativeData={nativeData} />}
-        />
+        >
+          {filteredNatives.map(([nativeHash, nativeData]) => (
+            <NativeNavLink key={nativeHash} nativeData={nativeData} />
+          ))}
+        </div>
       )}
       {!isLast && <Separator />}
     </>
   );
 }
+
+/*
+<Virtuoso
+  className="max-h-60 w-[95%] shrink"
+  style={{
+    height: listHeight + "rem",
+  }}
+  data={filteredNatives}
+  itemContent={(index, [nativeHash, nativeData]) => <NativeNavLink key={nativeHash} nativeData={nativeData} />}
+/>
+*/

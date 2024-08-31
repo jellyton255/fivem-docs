@@ -39,7 +39,6 @@ export default async function Page({ params }: { params: { hash: string } }) {
 
       <div className="prose prose-neutral prose-invert flex max-w-full flex-col prose-h2:mt-0 prose-p:my-0.5 prose-code:rounded-sm prose-code:bg-neutral-800 prose-code:px-1 prose-code:py-1 prose-code:font-mono prose-code:text-neutral-100 prose-code:before:content-[''] prose-code:after:content-[''] prose-pre:my-0 prose-ul:my-0 prose-table:my-2">
         <Highlight code={`${returnString} ${nativeName}(${getParamaterString(nativeData.params)})`} />
-
         <DescriptionSection description={nativeData.description} />
         <ArgsSection params={nativeData.params} />
         <ExamplesSection examples={nativeData.examples} />
