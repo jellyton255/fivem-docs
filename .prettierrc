@@ -1,0 +1,12 @@
+{
+	"trailingComma": "es5",
+	"tabWidth": 2,
+	"printWidth": 140,
+	"plugins": [
+		"prettier-plugin-tailwindcss"
+	],
+	"tailwindFunctions": [
+		"clsx",
+		"cn"
+	]
+}
