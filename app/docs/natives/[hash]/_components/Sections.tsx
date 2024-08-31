@@ -7,14 +7,9 @@ import { ParamProps } from "../page";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import hljs from "highlight.js/lib/core";
-import javascript from "highlight.js/lib/languages/javascript";
-import lua from "highlight.js/lib/languages/lua";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import "highlight.js/styles/monokai.css";
 
-hljs.registerLanguage("javascript", javascript);
-hljs.registerLanguage("lua", lua);
+import Highlight from "@/app/_components/Code";
 
 export async function DescriptionSection({ description }: { description: string }) {
   if (!description || description == "")
@@ -42,17 +37,7 @@ export async function DescriptionSection({ description }: { description: string 
               const { children, className } = props;
               const isMultiline = className || containsNewline(children as string);
 
-              if (isMultiline) {
-                const highlight = hljs.highlightAuto(children as string);
-
-                return (
-                  <section
-                    dangerouslySetInnerHTML={{
-                      __html: highlight.value,
-                    }}
-                  />
-                );
-              }
+              if (isMultiline) return <Highlight code={children as string} />;
 
               return <code>{children}</code>;
             },
@@ -112,11 +97,7 @@ export function ArgsSection({ params }: { params: ParamProps[] }) {
 export function ExamplesSection({ examples }: { examples: { lang: string; code: string }[] }) {
   if (!examples || examples.length == 0) return null;
 
-  const exampleBlocks = examples.map((example) => {
-    const highlight = hljs.highlight(example.code, { language: example.lang });
-
-    return { code: highlight.value, language: example.lang };
-  });
+  const exampleBlocks = examples.map((example) => ({ code: example.code, language: example.lang }));
 
   return (
     <>
@@ -132,11 +113,7 @@ export function ExamplesSection({ examples }: { examples: { lang: string; code: 
         </TabsList>
         {exampleBlocks.map((example) => (
           <TabsContent key={example.language} value={example.language}>
-            <pre
-              dangerouslySetInnerHTML={{
-                __html: example.code,
-              }}
-            />
+            <Highlight code={example.code} language={example.language} />
           </TabsContent>
         ))}
       </Tabs>
