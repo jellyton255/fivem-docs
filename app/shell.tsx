@@ -1,4 +1,4 @@
-import Navbar from "./_components/Navbar/Navbar";
+import Navbar from "./Navbar/Navbar";
 import { getNatives } from "./_utils/getNatives";
 
 export default async function Shell({ children }: { children: React.ReactNode }) {
