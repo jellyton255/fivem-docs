@@ -1,4 +1,4 @@
-import { containsNewline, replaceHashWithQuestionMark, replaceParamType } from "@/app/_utils/stringUtils";
+import { containsNewline, replaceParamType } from "@/app/_utils/stringUtils";
 import { faTriangleExclamation } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Markdown from "react-markdown";
@@ -47,7 +47,7 @@ export async function DescriptionSection({ description }: { description: string 
               return (
                 <Link
                   className="font-semibold underline"
-                  href={(href && "/docs/natives?hash=" + replaceHashWithQuestionMark(href)) || ""}
+                  href={(href && "/docs/natives?hash=" + href.substring(2)) || ""}
                   style={{ whiteSpace: "pre-wrap" }}
                 >
                   {children}

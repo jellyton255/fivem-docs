@@ -49,10 +49,6 @@ export function getParamaterString(params: ParamProps[]) {
   return paramsString;
 }
 
-export function replaceHashWithQuestionMark(inputString: string) {
-  return inputString.replace(/#/g, "/");
-}
-
 export function containsNewline(inputString: string) {
   return inputString.includes("\n");
 }
