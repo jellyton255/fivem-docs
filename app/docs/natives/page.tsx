@@ -10,8 +10,8 @@ export interface ParamProps {
   description?: string;
 }
 
-export default async function Page({ params }: { params: { hash: string } }) {
-  const hash = params?.hash?.substring(1);
+export default async function Page({ searchParams }: { searchParams: { hash: string } }) {
+  const hash = searchParams?.hash;
 
   if (!hash) return <div className="flex size-full items-center justify-center text-2xl font-bold">{"Something has gone very wrong!"}</div>;
 

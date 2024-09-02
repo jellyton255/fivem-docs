@@ -3,7 +3,7 @@ import { faTriangleExclamation } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { ParamProps } from "../page";
+import { ParamProps } from "../../page";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
@@ -47,7 +47,7 @@ export async function DescriptionSection({ description }: { description: string 
               return (
                 <Link
                   className="font-semibold underline"
-                  href={(href && "/docs/natives/" + replaceHashWithQuestionMark(href)) || ""}
+                  href={(href && "/docs/natives?hash=" + replaceHashWithQuestionMark(href)) || ""}
                   style={{ whiteSpace: "pre-wrap" }}
                 >
                   {children}

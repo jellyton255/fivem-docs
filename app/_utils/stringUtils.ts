@@ -1,4 +1,4 @@
-import { ParamProps } from "../docs/natives/[hash]/page";
+import { ParamProps } from "../docs/natives/page";
 
 // Capitalizes the first letter of a string and makes the rest lowercase
 const EXEMPTWORDS: Record<string, boolean> = {
