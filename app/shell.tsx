@@ -11,6 +11,7 @@ export default async function Shell({ children }: { children: React.ReactNode })
         <Navbar natives={natives} />
         <div className="grow">{children}</div>
       </div>
+      <div className="flex h-0 w-full grow px-4 pb-4">{children}</div>
     </div>
   );
 }
