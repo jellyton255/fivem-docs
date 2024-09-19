@@ -7,7 +7,6 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
 import Highlight from "@/app/_components/Code";
 import { ParamProps } from "../page";
 
@@ -74,7 +73,7 @@ export function ArgsSection({ params }: { params: ParamProps[] }) {
         </Badge>
 
         <div key={paramData.name + paramData.type}>
-          <code className="">
+          <code>
             {paramData.name}: {replaceParamType(paramData.type)}
           </code>
           {paramData.description && <Markdown>{paramData.description}</Markdown>}
