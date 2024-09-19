@@ -129,7 +129,7 @@ export default async function Page({ searchParams }: { searchParams: { hash: str
   const returnString = (nativeData.results && nativeData.results != "void" && replaceParamType(nativeData.results)) || "";
 
   return (
-    <div className="mx-auto flex max-w-7xl flex-col gap-2 p-4">
+    <div className="mx-auto flex max-w-7xl flex-col gap-2 p-4 md:min-w-[70rem]">
       <div className="flex w-full flex-col gap-2">
         <div className="flex items-center gap-2">
           <RealmIndicator realm={nativeData.apiset || "client"} />
