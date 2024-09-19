@@ -92,10 +92,29 @@ export interface ParamProps {
   description?: string;
 }
 
+function WelcomeCard() {
+  return (
+    <div className="flex h-fit flex-col gap-2 rounded-md bg-neutral-900 p-4 md:max-w-4xl">
+      <h1 className="scroll-m-20 text-3xl font-extrabold lg:text-5xl">Native Documentation</h1>
+      <p className="text-neutral-300">
+        Utilize the navbar on the left to navigate to the documentation for a specific native. If you're looking for a specific native, you
+        can search for it by name. If you're not sure what you're looking for, you can browse by namespace by opening up a section and
+        scrolling through.
+      </p>
+      <p className="text-right text-neutral-500">This site is not affiliated with Cfx.re or Rockstar Games.</p>
+    </div>
+  );
+}
+
 export default async function Page({ searchParams }: { searchParams: { hash: string } }) {
   const hash = searchParams?.hash;
 
-  if (!hash) return <div className="flex size-full items-center justify-center text-2xl font-bold">{"Something has gone very wrong!"}</div>;
+  if (!hash)
+    return (
+      <div className="flex w-full items-center justify-center">
+        <WelcomeCard />
+      </div>
+    );
 
   const [nativesByHash, nativesByJHash] = await Promise.all([getNativesByHash(), getNativesByJHash()]);
 
