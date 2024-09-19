@@ -39,10 +39,10 @@ export async function generateMetadata({ searchParams }: { searchParams: { [key:
 
   if (!hash)
     return {
-      title: "Native Not Found",
+      title: "Natives | FiveM Docs",
       description: "FiveM documentation for natives. Not affiliated with Cfx.re or Rockstar Games.",
       openGraph: {
-        title: "Native Not Found",
+        title: "Natives | FiveM Docs",
       },
     };
 
@@ -50,10 +50,10 @@ export async function generateMetadata({ searchParams }: { searchParams: { [key:
 
   if (!nativeData)
     return {
-      title: "Native Not Found",
+      title: "Natives | FiveM Docs",
       description: "FiveM documentation for natives. Not affiliated with Cfx.re or Rockstar Games.",
       openGraph: {
-        title: "Native Not Found",
+        title: "Natives | FiveM Docs",
       },
     };
 
