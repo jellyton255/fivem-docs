@@ -1,13 +1,13 @@
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
-import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
 import Shell from "./shell";
+import { config } from "@fortawesome/fontawesome-svg-core";
+config.autoAddCss = false;
 import "./globals.css";
 import "highlight.js/styles/monokai.css";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import { config } from "@fortawesome/fontawesome-svg-core";
-config.autoAddCss = false;
 
 export const metadata: Metadata = {
   title: {

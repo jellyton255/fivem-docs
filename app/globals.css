@@ -67,10 +67,6 @@
   }
 }
 
-html {
-  scroll-padding-top: 4.5rem;
-}
-
 @keyframes highlight {
   from {
     background-color: rgb(87 87 87);
