@@ -1,9 +1,9 @@
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
-import { GeistSans } from 'geist/font/sans';
-import { GeistMono } from 'geist/font/mono';
-import Shell from "./shell";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import { config } from "@fortawesome/fontawesome-svg-core";
+import Shell from "./shell";
 config.autoAddCss = false;
 import "./globals.css";
 import "highlight.js/styles/monokai.css";
