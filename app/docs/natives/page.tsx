@@ -50,10 +50,10 @@ export async function generateMetadata({ searchParams }: { searchParams: { [key:
 
   if (!nativeData)
     return {
-      title: "Natives | FiveM Docs",
+      title: "Natives",
       description: "FiveM documentation for natives. Not affiliated with Cfx.re or Rockstar Games.",
       openGraph: {
-        title: "Natives | FiveM Docs",
+        title: "Natives",
       },
     };
 
