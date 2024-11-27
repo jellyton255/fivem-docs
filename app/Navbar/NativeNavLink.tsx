@@ -20,6 +20,7 @@ function NativeNavLink({ nativeData }: { nativeData: Natives }) {
         key={nativeData.jhash || nativeData.hash}
         href={"/docs/natives?hash=" + (nativeData.jhash || nativeData.hash)}
         className="overflow-hidden text-ellipsis"
+        prefetch={false}
       >
         {(nativeData.name && camelCaseFromSnakeCase(nativeData?.name)) || nativeData.jhash || nativeData.hash}
       </Link>
