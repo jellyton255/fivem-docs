@@ -1,8 +1,8 @@
-import { camelCaseFromSnakeCase } from "@/app/_utils/stringUtils";
+import { camelCaseFromSnakeCase } from "@/utils/stringUtils";
 import { memo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Natives } from "@/app/_types/Natives";
+import { Natives } from "@/types/Natives";
 import { Button } from "@/components/ui/button";
 
 function NativeNavLink({ nativeData }: { nativeData: Natives }) {

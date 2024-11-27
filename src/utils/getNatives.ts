@@ -1,4 +1,4 @@
-import { Natives } from "../_types/Natives";
+import { Natives } from "../types/Natives";
 
 let nativeCache: Object | undefined = undefined;
 let nativesByHashCache: Record<string, Natives> = {}; // Initialize as an empty object

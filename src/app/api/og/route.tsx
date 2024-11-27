@@ -1,3 +1,4 @@
+import { Realm } from "@/components/realm-indicator";
 import { ImageResponse } from "next/og";
 
 const sharedGradient = `linear-gradient(
@@ -18,7 +19,7 @@ const serverGradient = `linear-gradient(
 	#228BE6 50%
 )`;
 
-const realmMapper = {
+const realmMapper: Record<string, string> = {
   Client: clientGradient,
   Server: serverGradient,
   Shared: sharedGradient,
@@ -38,7 +39,7 @@ export async function GET(request: Request) {
       : "This page lacks a native description! If you have any information on this native, consider contributing!";
 
     const hasRealm = searchParams.has("realm");
-    const realm = hasRealm ? searchParams.get("realm")?.slice(0, 100) : "Client";
+    const realm = ((hasRealm && searchParams.get("realm")?.slice(0, 100)) || "Client") as Realm;
 
     const hasNamespace = searchParams.has("namespace");
     const namespace = hasNamespace ? searchParams.get("namespace")?.slice(0, 100) : "CFX";

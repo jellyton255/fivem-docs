@@ -1,7 +1,7 @@
-import { getNatives } from "@/app/_utils/getNatives";
-import Navbar from "@/app/Navbar/Navbar";
+import Navbar from "@/components/navbar/navbar";
+import { getNatives } from "@/utils/getNatives";
 
-export default async function RootLayout({
+export default async function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;

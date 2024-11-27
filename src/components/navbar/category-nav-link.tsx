@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
-import NativeNavLink from "./NativeNavLink";
-import { camelCaseFromSnakeCase, capitalizeFirstLetter } from "@/app/_utils/stringUtils";
+import NativeNavLink from "./native-nav-link";
+import { camelCaseFromSnakeCase, capitalizeFirstLetter } from "@/utils/stringUtils";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { faChevronLeft } from "@fortawesome/pro-solid-svg-icons";

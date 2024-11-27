@@ -1,6 +1,6 @@
+import GithubIcon from "@/components/github-icon";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import GithubIcon from "./_components/github-icon";
 
 export default async function Shell({ children }: { children: React.ReactNode }) {
   return (

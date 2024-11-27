@@ -1,4 +1,4 @@
-import { containsNewline, replaceParamType } from "@/app/_utils/stringUtils";
+import { containsNewline, replaceParamType } from "@/utils/stringUtils";
 import { faTriangleExclamation } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Markdown from "react-markdown";
@@ -7,7 +7,7 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Highlight from "@/app/_components/Code";
+import Highlight from "@/components/code";
 import { ParamProps } from "../page";
 
 export async function DescriptionSection({ description }: { description: string }) {

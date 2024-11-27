@@ -1,10 +1,10 @@
 "use client";
 import { useMemo, useState } from "react";
-import CategoryNavLink from "./CategoryNavLink";
+import CategoryNavLink from "./category-nav-link";
 import { faArrowsToLine, faMagnifyingGlass } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { usePathname } from "next/navigation";
-import { Natives } from "@/app/_types/Natives";
+import { Natives } from "@/types/Natives";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { ScrollArea } from "@/components/ui/scroll-area";

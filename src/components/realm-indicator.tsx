@@ -1,7 +1,7 @@
-import { capitalizeFirstLetter } from "../_utils/stringUtils";
+import { capitalizeFirstLetter } from "@/utils/stringUtils";
 import { cn } from "@/lib/utils";
 
-type Realm = "client" | "server" | "shared";
+export type Realm = "client" | "server" | "shared";
 type RealmKeys = "client" | "server";
 const realmMapper: Record<RealmKeys, string> = {
   client: "bg-orange-600",
@@ -16,9 +16,7 @@ const gradient = `linear-gradient(
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
-function RealmIndicator(props: { realm: Realm }) {
-  const { realm } = props;
-
+function RealmIndicator({ realm }: { realm: Realm }) {
   return (
     <TooltipProvider delayDuration={0}>
       <Tooltip>
@@ -26,14 +24,14 @@ function RealmIndicator(props: { realm: Realm }) {
           <div
             className={cn("size-6 rounded-full", realm != "shared" && realmMapper[realm])}
             style={{
-              background: realm == "shared" && gradient,
+              background: realm == "shared" ? gradient : undefined,
             }}
           />
         </TooltipTrigger>
         <TooltipContent
           className={cn("text-lg font-bold text-neutral-100", realm != "shared" && realmMapper[realm])}
           style={{
-            background: realm == "shared" && gradient,
+            background: realm == "shared" ? gradient : undefined,
           }}
         >
           {capitalizeFirstLetter(realm)}

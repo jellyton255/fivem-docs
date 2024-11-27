@@ -1,4 +1,4 @@
-import { getNatives } from "./_utils/getNatives";
+import { getNatives } from "../utils/getNatives";
 
 export default function Home() {
   getNatives();

@@ -1,10 +1,10 @@
-import RealmIndicator from "@/app/_components/RealmIndicator";
-import { camelCaseFromSnakeCase, capitalizeFirstLetter, getParamaterString, replaceParamType } from "@/app/_utils/stringUtils";
-import { DescriptionSection, ArgsSection, ExamplesSection } from "./_components/Sections";
-import { getNativesByHash, getNativesByJHash } from "@/app/_utils/getNatives";
-import Highlight from "@/app/_components/Code";
-import getBaseURL from "@/app/_utils/getBaseURL";
+import RealmIndicator from "@/components/realm-indicator";
+import { camelCaseFromSnakeCase, capitalizeFirstLetter, getParamaterString, replaceParamType } from "@/utils/stringUtils";
+import { getNativesByHash, getNativesByJHash } from "@/utils/getNatives";
+import Highlight from "@/components/code";
+import getBaseURL from "@/utils/getBaseURL";
 import { Metadata } from "next";
+import { DescriptionSection, ArgsSection, ExamplesSection } from "./(components)/sections";
 
 interface URLParams {
   title: string;
@@ -17,7 +17,7 @@ interface URLParams {
  * Encodes a parameter object into a URL query string.
  */
 function encodeQueryParams(params: URLParams): string {
-  return Object.keys(params)
+  return (Object.keys(params) as Array<keyof URLParams>)
     .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(params[key]))
     .join("&");
 }
@@ -87,11 +87,11 @@ export async function generateMetadata(props: { searchParams: Promise<{ [key: st
   };
 }
 
-export interface ParamProps {
+export type ParamProps = {
   name: string;
   type: string;
   description?: string;
-}
+};
 
 function WelcomeCard() {
   return (
