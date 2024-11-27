@@ -32,7 +32,8 @@ function generateApiUrl(baseURL: string, params: URLParams): string {
 
 const baseURL = getBaseURL();
 
-export async function generateMetadata({ searchParams }: { searchParams: { [key: string]: string | undefined } }): Promise<Metadata> {
+export async function generateMetadata(props: { searchParams: Promise<{ [key: string]: string | undefined }> }): Promise<Metadata> {
+  const searchParams = await props.searchParams;
   const [nativesByHash, nativesByJHash] = await Promise.all([getNativesByHash(), getNativesByJHash()]);
 
   const hash = searchParams?.hash;
@@ -106,7 +107,8 @@ function WelcomeCard() {
   );
 }
 
-export default async function Page({ searchParams }: { searchParams: { hash: string } }) {
+export default async function Page(props: { searchParams: Promise<{ hash: string }> }) {
+  const searchParams = await props.searchParams;
   const hash = searchParams?.hash;
 
   if (!hash)
