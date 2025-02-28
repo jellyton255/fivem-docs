@@ -5,6 +5,7 @@ import Highlight from "@/components/code";
 import getBaseURL from "@/utils/getBaseURL";
 import { Metadata } from "next";
 import { DescriptionSection, ArgsSection, ExamplesSection } from "./(components)/sections";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface URLParams {
   title: string;
@@ -72,9 +73,11 @@ export async function generateMetadata(props: { searchParams: Promise<{ [key: st
   const url = generateApiUrl(baseURL + "/api/og", URLParams);
 
   return {
-    title: nativeName,
+    title: { absolute: nativeName },
+    description: nativeData.description,
     openGraph: {
-      title: nativeName,
+      title: { absolute: nativeName },
+      description: nativeData.description,
       images: [
         {
           url: url,
