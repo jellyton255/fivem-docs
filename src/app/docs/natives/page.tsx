@@ -131,7 +131,7 @@ export default async function Page(props: { searchParams: Promise<{ hash: string
   const returnString = (nativeData.results && nativeData.results != "void" && replaceParamType(nativeData.results)) || "";
 
   return (
-    <div className="mx-auto flex max-w-7xl flex-col gap-2 p-4 md:min-w-[70rem]">
+    <ScrollArea className="mx-auto flex max-w-7xl flex-col gap-2 p-4 md:min-w-[70rem]">
       <div className="flex w-full flex-col gap-2">
         <div className="flex items-center gap-2">
           <RealmIndicator realm={nativeData.apiset || "client"} />
@@ -146,6 +146,6 @@ export default async function Page(props: { searchParams: Promise<{ hash: string
         <ArgsSection params={nativeData.params} />
         <ExamplesSection examples={nativeData.examples} />
       </div>
-    </div>
+    </ScrollArea>
   );
 }
