@@ -8,9 +8,9 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Highlight from "@/components/code";
-import { ParamProps } from "../page";
+import { Param } from "@/types/Natives";
 
-export async function DescriptionSection({ description }: { description: string }) {
+export function DescriptionSection({ description }: { description: string }) {
   if (!description || description == "")
     return (
       <>
@@ -62,7 +62,7 @@ export async function DescriptionSection({ description }: { description: string 
   );
 }
 
-export function ArgsSection({ params }: { params: ParamProps[] }) {
+export function ArgsSection({ params }: { params: Param[] }) {
   if (!params || params.length == 0) return null;
 
   const listItems = params.map((paramData, index) => {
