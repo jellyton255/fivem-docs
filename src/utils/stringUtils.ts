@@ -1,6 +1,5 @@
-import { ParamProps } from "../app/docs/natives/page";
+import { Param } from "@/types/Natives";
 
-// Capitalizes the first letter of a string and makes the rest lowercase
 const EXEMPTWORDS: Record<string, boolean> = {
   DLC: true,
   CFX: true,
@@ -39,7 +38,7 @@ export function replaceParamType(type: string) {
   return paramMapper[type.toLowerCase() as keyof typeof paramMapper] || type;
 }
 
-export function getParamaterString(params: ParamProps[]) {
+export function getParamaterString(params: Param[]) {
   var paramsString = (params.length > 0 && " ") || "";
   params.map((paramData, index) => {
     paramsString += `${paramData.name}: ${replaceParamType(paramData.type)}`;

@@ -1,11 +1,11 @@
-import { Natives } from "../types/Natives";
+import { Native } from "../types/Natives";
 
-let nativeCache: Object | undefined = undefined;
-let nativesByHashCache: Record<string, Natives> = {}; // Initialize as an empty object
-let nativesByJHashCache: Record<string, Natives> = {}; // Initialize as an empty object
+let nativeCache: Record<string, Record<string, Native>> | undefined = undefined;
+let nativesByHashCache: Record<string, Native> = {};
+let nativesByJHashCache: Record<string, Native> = {};
 
-export async function getClientNatives() {
-  const nativesRes = await fetch("https://runtime.fivem.net/doc/natives.json", { cache: "no-store" });
+export async function getClientNatives(): Promise<Record<string, Record<string, Native>>> {
+  const nativesRes = await fetch("https://runtime.fivem.net/doc/natives.json");
 
   if (!nativesRes.ok) {
     throw new Error("Failed to fetch natives.");
@@ -14,8 +14,8 @@ export async function getClientNatives() {
   return await nativesRes.json();
 }
 
-export async function getCfxNatives() {
-  const nativesRes = await fetch("https://runtime.fivem.net/doc/natives_cfx.json", { cache: "no-store" });
+export async function getCfxNatives(): Promise<Record<string, Record<string, Native>>> {
+  const nativesRes = await fetch("https://runtime.fivem.net/doc/natives_cfx.json");
 
   if (!nativesRes.ok) {
     throw new Error("Failed to fetch cfx natives.");

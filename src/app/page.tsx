@@ -12,11 +12,12 @@ export default function Home() {
 
         <h2 className="scroll-m-20 text-2xl font-bold">What is this site? Why does it exist?</h2>
         <p className="text-neutral-300">
-          FiveM's documentation site hasn't really been visually updated since the first time I saw it, which was 6 years ago. So I've
-          decided to make my own, originally just for fun, and to improve my knowledge of Next.js. However this has become my daily driver
-          for native documentation. It's visually much more modern and has a far better layout than the standard FiveM documentation site.
-          It's also much easier to use if you're just browsing for natives without a specific name to search by. But most importantly, it
-          has a dark theme, which is a god send for late night development.
+          FiveM's documentation site hasn't really been visually updated since the first time I saw it, which was 6
+          years ago. So I've decided to make my own, originally just for fun, and to improve my knowledge of Next.js.
+          However this has become my daily driver for native documentation. It's visually much more modern and has a far
+          better layout than the standard FiveM documentation site. It's also much easier to use if you're just browsing
+          for natives without a specific name to search by. But most importantly, it has a dark theme, which is a god
+          send for late night development.
         </p>
         <p className="text-right text-neutral-500">This site is not affiliated with Cfx.re or Rockstar Games.</p>
       </div>

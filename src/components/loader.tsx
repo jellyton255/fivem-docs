@@ -2,7 +2,15 @@ import "./loader.css";
 
 export default function Loader() {
   return (
-    <svg className="loader-container" x="0px" y="0px" viewBox="0 0 37 37" height="37" width="37" preserveAspectRatio="xMidYMid meet">
+    <svg
+      className="loader-container"
+      x="0px"
+      y="0px"
+      viewBox="0 0 37 37"
+      height="37"
+      width="37"
+      preserveAspectRatio="xMidYMid meet"
+    >
       <path
         className="loader-track"
         fill="none"
