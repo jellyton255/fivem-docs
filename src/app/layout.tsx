@@ -1,13 +1,14 @@
-import { Analytics } from "@vercel/analytics/react";
+import "./globals.css";
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/react";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import Shell from "./shell";
-config.autoAddCss = false;
-import "./globals.css";
-import "highlight.js/styles/monokai.css";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "@fortawesome/fontawesome-svg-core/styles.css";
+
+config.autoAddCss = false;
 
 export const metadata: Metadata = {
   title: {
@@ -30,15 +31,20 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
-      <body>
-        <Shell>{children}</Shell>
+    <html lang="en" className={`dark ${GeistSans.variable} ${GeistMono.variable}`}>
+      <head>
+        <link rel="dns-prefetch" href="https://runtime.fivem.net" />
+      </head>
+      <body className="min-h-screen bg-background font-sans antialiased">
+        <NuqsAdapter>
+          <Shell>{children}</Shell>
+        </NuqsAdapter>
         <Analytics />
       </body>
     </html>
