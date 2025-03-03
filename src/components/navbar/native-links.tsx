@@ -6,6 +6,18 @@ import { Virtuoso } from "react-virtuoso";
 import NativeNavLink from "./native-nav-link";
 import { useQueryStates } from "nuqs";
 
+function searchForNative(natives: Native[], search: string, showUnnamedNatives: boolean) {
+  const searchLower = search.toLowerCase();
+
+  return natives.filter(
+    (native) =>
+      native.name &&
+      (camelCaseFromSnakeCase(native.name).toLowerCase().includes(searchLower) ||
+        native.hash.toLowerCase().includes(searchLower)) &&
+      (!showUnnamedNatives || native.name?.length > 0)
+  );
+}
+
 export default function NativeLinks({
   natives,
   flatNatives,
@@ -18,13 +30,9 @@ export default function NativeLinks({
   let filteredNatives = Object.values(natives[activeTab] || {}).filter((native) =>
     showUnnamedNatives ? true : !!native.name
   );
+
   if (search && search.length > 0) {
-    filteredNatives = flatNatives.filter(
-      (native) =>
-        native.name &&
-        camelCaseFromSnakeCase(native.name).toLowerCase().includes(search.toLowerCase()) &&
-        (native.name?.length > 0 || !showUnnamedNatives)
-    );
+    filteredNatives = searchForNative(flatNatives, search, showUnnamedNatives);
   }
 
   if (search && filteredNatives.length === 0) {
