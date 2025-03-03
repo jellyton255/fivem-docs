@@ -12,7 +12,7 @@ type NativeNavLinkProps = {
 };
 
 function NativeNavLink({ nativeData, isActive }: NativeNavLinkProps) {
-  const hash = nativeData.jhash || nativeData.hash;
+  const hash = nativeData.hash;
   const [_, setQueryStates] = useQueryStates(searchParams);
 
   const displayName = (nativeData.name && camelCaseFromSnakeCase(nativeData.name)) || hash;

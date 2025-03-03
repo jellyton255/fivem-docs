@@ -25,7 +25,7 @@ export default function NativeLinks({
   natives: Record<string, Record<string, Native>>;
   flatNatives: Native[];
 }) {
-  const [{ hash, search, activeTab, showUnnamedNatives }] = useQueryStates(searchParams);
+  const [{ hash: currentHash, search, activeTab, showUnnamedNatives }] = useQueryStates(searchParams);
 
   let filteredNatives = Object.values(natives[activeTab] || {}).filter((native) =>
     showUnnamedNatives ? true : !!native.name
@@ -44,8 +44,7 @@ export default function NativeLinks({
       className="h-full"
       data={filteredNatives}
       itemContent={(index, native) => {
-        const nativeHash = native.jhash || native.hash;
-        return <NativeNavLink key={native.hash} nativeData={native} isActive={hash === nativeHash} />;
+        return <NativeNavLink key={native.hash} nativeData={native} isActive={currentHash === native.hash} />;
       }}
     />
   );
