@@ -2,7 +2,6 @@ import { Native } from "../types/Natives";
 
 let nativeCache: Record<string, Record<string, Native>> | undefined = undefined;
 let nativesByHashCache: Record<string, Native> = {};
-let nativesByJHashCache: Record<string, Native> = {};
 
 export async function getClientNatives(): Promise<Record<string, Record<string, Native>>> {
   const nativesRes = await fetch("https://runtime.fivem.net/doc/natives.json");
@@ -36,9 +35,6 @@ export async function getNatives() {
     for (const hash in natives[category]) {
       const native = natives[category][hash];
       nativesByHashCache[hash] = native;
-      if (native.jhash) {
-        nativesByJHashCache[native.jhash] = native;
-      }
     }
   }
 
@@ -51,12 +47,4 @@ export async function getNativesByHash() {
   await getNatives();
 
   return nativesByHashCache;
-}
-
-export async function getNativesByJHash() {
-  if (nativeCache) return nativesByJHashCache;
-
-  await getNatives();
-
-  return nativesByJHashCache;
 }

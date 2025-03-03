@@ -1,5 +1,5 @@
 import { camelCaseFromSnakeCase, capitalizeFirstLetter } from "@/utils/stringUtils";
-import { getNatives, getNativesByHash, getNativesByJHash } from "@/utils/getNatives";
+import { getNatives, getNativesByHash } from "@/utils/getNatives";
 import getBaseURL from "@/utils/getBaseURL";
 import { Metadata } from "next";
 import Navbar from "@/components/navbar/navbar";
@@ -35,7 +35,7 @@ export async function generateMetadata(props: {
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }): Promise<Metadata> {
   const searchParams = await props.searchParams;
-  const [nativesByHash, nativesByJHash] = await Promise.all([getNativesByHash(), getNativesByJHash()]);
+  const nativesByHash = await getNativesByHash();
 
   const hash = searchParams?.hash;
 
@@ -48,7 +48,7 @@ export async function generateMetadata(props: {
       },
     };
 
-  const nativeData = nativesByHash[hash] || nativesByJHash[hash];
+  const nativeData = nativesByHash[hash];
 
   if (!nativeData)
     return {
@@ -97,16 +97,12 @@ export type ParamProps = {
 };
 
 export default async function Page() {
-  const [natives, nativesByHash, nativesByJHash] = await Promise.all([
-    getNatives(),
-    getNativesByHash(),
-    getNativesByJHash(),
-  ]);
+  const [natives, nativesByHash] = await Promise.all([getNatives(), getNativesByHash()]);
 
   return (
     <div className="flex w-full flex-nowrap gap-2">
       <Navbar natives={natives} />
-      <NativePage nativesByHash={nativesByHash} nativesByJHash={nativesByJHash} />
+      <NativePage nativesByHash={nativesByHash} />
     </div>
   );
 }

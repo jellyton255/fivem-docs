@@ -23,13 +23,7 @@ function WelcomeCard() {
   );
 }
 
-export default function NativePage({
-  nativesByHash,
-  nativesByJHash,
-}: {
-  nativesByHash: Record<string, Native>;
-  nativesByJHash: Record<string, Native>;
-}) {
+export default function NativePage({ nativesByHash }: { nativesByHash: Record<string, Native> }) {
   const [{ hash }] = useQueryStates(searchParams);
 
   if (!hash)
@@ -39,7 +33,7 @@ export default function NativePage({
       </div>
     );
 
-  const nativeData = nativesByHash[hash] || nativesByJHash[hash] || null;
+  const nativeData = nativesByHash[hash] || null;
 
   if (!nativeData)
     return (

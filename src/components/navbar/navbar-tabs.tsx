@@ -30,7 +30,7 @@ function NavbarTabs({
       >
         <TabsList className="w-max flex-wrap justify-start bg-transparent">
           {Object.keys(natives).map((category) => (
-            <TabsTrigger value={category} key={category} onClick={() => setQueryStates({ search: "" })}>
+            <TabsTrigger key={category} value={category} onClick={() => setQueryStates({ search: "" })}>
               {category}
             </TabsTrigger>
           ))}
