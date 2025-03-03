@@ -1,6 +1,6 @@
 "use client";
 import { ScrollAreaWithShadow } from "@/components/ui/scroll-area-with-shadow";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs-navbar";
 import { useQueryStates } from "nuqs";
 import { memo } from "react";
 import { Native } from "@/types/Natives";
