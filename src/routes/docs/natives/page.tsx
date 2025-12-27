@@ -1,8 +1,8 @@
-import { camelCaseFromSnakeCase, capitalizeFirstLetter } from "@/utils/stringUtils";
-import { getNatives, getNativesByHash } from "@/utils/getNatives";
-import getBaseURL from "@/utils/getBaseURL";
-import { Metadata } from "next";
 import Navbar from "@/components/navbar/navbar";
+import getBaseURL from "@/utils/getBaseURL";
+import { getNatives, getNativesByHash } from "@/utils/getNatives";
+import { camelCaseFromSnakeCase, capitalizeFirstLetter } from "@/utils/stringUtils";
+import { Metadata } from "next";
 import NativePage from "./(components)/native-page";
 
 interface URLParams {

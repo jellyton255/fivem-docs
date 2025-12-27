@@ -1,13 +1,13 @@
 "use client";
-import { ArgsSection, ExamplesSection } from "./sections";
-import RealmIndicator from "@/components/realm-indicator";
-import { camelCaseFromSnakeCase, getParamaterString, replaceParamType } from "@/utils/stringUtils";
+
 import Highlight from "@/components/code";
+import RealmIndicator from "@/components/realm-indicator";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { DescriptionSection } from "./sections";
-import { useQueryStates } from "nuqs";
-import { searchParams } from "@/app/docs/natives/search-params";
+import { searchParams } from "@/routes/docs/natives/search-params";
 import { Native } from "@/types/Natives";
+import { camelCaseFromSnakeCase, getParamaterString, replaceParamType } from "@/utils/stringUtils";
+import { useQueryStates } from "nuqs";
+import { ArgsSection, DescriptionSection, ExamplesSection } from "./sections";
 
 function WelcomeCard() {
   return (
@@ -47,17 +47,17 @@ export default function NativePage({ nativesByHash }: { nativesByHash: Record<st
     (nativeData.results && nativeData.results != "void" && replaceParamType(nativeData.results)) || "";
 
   return (
-    <ScrollArea className="mx-auto flex max-w-7xl flex-col gap-2 p-4 md:min-w-[70rem]">
-      <div className="mx-auto flex max-w-7xl flex-col gap-2 p-4 md:min-w-[70rem]">
+    <ScrollArea className="mx-auto flex max-w-7xl flex-col gap-2 p-4 md:min-w-280">
+      <div className="mx-auto flex max-w-7xl flex-col gap-2 p-4 md:min-w-280">
         <div className="flex max-w-7xl flex-col gap-2">
           <div className="flex items-center gap-2">
             <RealmIndicator realm={nativeData.apiset || "client"} />
-            <h1 className="scroll-m-20 text-3xl font-extrabold leading-[0] lg:text-4xl">{nativeName}</h1>
+            <h1 className="scroll-m-20 text-3xl leading-0 font-extrabold lg:text-4xl">{nativeName}</h1>
           </div>
           <div className="text-sm font-medium text-neutral-400">{nativeData.hash}</div>
         </div>
 
-        <div className="prose prose-neutral prose-invert flex max-w-full flex-col prose-h2:mt-0 prose-p:my-0.5 prose-code:rounded-sm prose-code:bg-neutral-800 prose-code:px-1 prose-code:py-1 prose-code:font-mono prose-code:text-neutral-100 prose-code:before:content-[''] prose-code:after:content-[''] prose-pre:my-0 prose-ul:my-0 prose-table:my-2">
+        <div className="prose prose-neutral prose-invert prose-h2:mt-0 prose-p:my-0.5 prose-code:rounded-sm prose-code:bg-neutral-800 prose-code:px-1 prose-code:py-1 prose-code:font-mono prose-code:text-neutral-100 prose-code:before:content-[''] prose-code:after:content-[''] prose-pre:my-0 prose-ul:my-0 prose-table:my-2 flex max-w-full flex-col">
           <Highlight code={`${returnString} ${nativeName}(${getParamaterString(nativeData.params)})`} />
           <DescriptionSection description={nativeData.description} />
           <ArgsSection params={nativeData.params} />

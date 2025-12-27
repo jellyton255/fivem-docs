@@ -1,12 +1,13 @@
 "use client";
+
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { searchParams } from "@/routes/docs/natives/search-params";
 import { faMagnifyingGlass } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { useQueryStates } from "nuqs";
-import { Input } from "../ui/input";
-import { searchParams } from "@/app/docs/natives/search-params";
-import { Button } from "../ui/button";
 import { EyeOff } from "lucide-react";
+import { useQueryStates } from "nuqs";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 
 export default function SearchBar() {
   const [{ search, showUnnamedNatives }, setQueryStates] = useQueryStates(searchParams);

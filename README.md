@@ -4,11 +4,10 @@ This is just a side project I wanted to do since most of my work in React is in 
 
 ![chrome - March01 - 02 16 - 4754](https://github.com/user-attachments/assets/ebde399d-75b4-4f8b-9223-75a848bb21b0)
 
-
-# Contributing
+## Contributing
 
 Feel free to make a pull request for anything you want basically, any contribution is appreciated.
 
-# Legal
+## Legal
 
 This project is in no way affiliated with Cfx.re or Rockstar Games.

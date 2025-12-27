@@ -1,4 +1,9 @@
+import { createFileRoute } from "@tanstack/react-router";
 import { getNatives } from "../utils/getNatives";
+
+export const Route = createFileRoute("/")({
+  component: Home,
+});
 
 export default function Home() {
   getNatives();

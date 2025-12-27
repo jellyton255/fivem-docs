@@ -1,10 +1,11 @@
 "use client";
-import * as React from "react";
-import * as TabsPrimitive from "@radix-ui/react-tabs";
 
+import * as React from "react";
 import { cn } from "@/lib/utils";
+import { searchParams } from "@/routes/docs/natives/search-params";
+import * as TabsPrimitive from "@radix-ui/react-tabs";
 import { useQueryStates } from "nuqs";
-import { searchParams } from "@/app/docs/natives/search-params";
+
 const Tabs = TabsPrimitive.Root;
 
 const TabsList = React.forwardRef<
@@ -14,7 +15,7 @@ const TabsList = React.forwardRef<
   <TabsPrimitive.List
     ref={ref}
     className={cn(
-      "inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground",
+      "bg-muted text-muted-foreground inline-flex h-10 items-center justify-center rounded-md p-1",
       className
     )}
     {...props}
@@ -32,9 +33,9 @@ const TabsTrigger = React.forwardRef<
     <TabsPrimitive.Trigger
       ref={ref}
       className={cn(
-        "focus-visible:ring-none inline-flex items-center justify-center whitespace-nowrap rounded-t-sm border-primary px-3 py-1.5 text-sm font-medium outline-none focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+        "focus-visible:ring-none border-primary inline-flex items-center justify-center rounded-t-sm px-3 py-1.5 text-sm font-medium whitespace-nowrap outline-hidden focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
         search == "" &&
-          "data-[state=active]:border-b-2 data-[state=active]:border-primary-foreground data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-sm",
+          "data-[state=active]:border-primary-foreground data-[state=active]:bg-primary data-[state=active]:border-b-2 data-[state=active]:text-white data-[state=active]:shadow-xs",
         className
       )}
       {...props}
@@ -47,7 +48,7 @@ const TabsContent = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
 >(({ className, ...props }, ref) => (
-  <TabsPrimitive.Content ref={ref} className={cn("mt-2 outline-none", className)} {...props} />
+  <TabsPrimitive.Content ref={ref} className={cn("mt-2 outline-hidden", className)} {...props} />
 ));
 TabsContent.displayName = TabsPrimitive.Content.displayName;
 

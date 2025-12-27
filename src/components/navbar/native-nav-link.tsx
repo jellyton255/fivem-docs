@@ -1,10 +1,11 @@
 "use client";
-import { camelCaseFromSnakeCase } from "@/utils/stringUtils";
-import { Native } from "@/types/Natives";
-import { Button } from "@/components/ui/button";
-import { useQueryStates } from "nuqs";
+
 import { memo } from "react";
-import { searchParams } from "@/app/docs/natives/search-params";
+import { Button } from "@/components/ui/button";
+import { searchParams } from "@/routes/docs/natives/search-params";
+import { Native } from "@/types/Natives";
+import { camelCaseFromSnakeCase } from "@/utils/stringUtils";
+import { useQueryStates } from "nuqs";
 
 type NativeNavLinkProps = {
   nativeData: Native;
@@ -25,7 +26,7 @@ function NativeNavLink({ nativeData, isActive }: NativeNavLinkProps) {
       onClick={() => {
         setQueryStates({ hash });
       }}
-      className="w-full max-w-full scroll-m-20 justify-start overflow-clip rounded-md bg-transparent px-6 py-4 font-mono text-lg transition-all data-[active=true]:bg-primary data-[active=true]:text-white"
+      className="data-[active=true]:bg-primary w-full max-w-full scroll-m-20 justify-start overflow-clip rounded-md bg-transparent px-6 py-4 font-mono text-lg transition-all data-[active=true]:text-white"
     >
       {displayName}
     </Button>

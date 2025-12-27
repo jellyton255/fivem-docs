@@ -1,10 +1,11 @@
 "use client";
+
+import { memo } from "react";
 import { ScrollAreaWithShadow } from "@/components/ui/scroll-area-with-shadow";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs-navbar";
-import { useQueryStates } from "nuqs";
-import { memo } from "react";
+import { searchParams } from "@/routes/docs/natives/search-params";
 import { Native } from "@/types/Natives";
-import { searchParams } from "@/app/docs/natives/search-params";
+import { useQueryStates } from "nuqs";
 
 function NavbarTabs({
   natives,

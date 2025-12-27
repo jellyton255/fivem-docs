@@ -1,10 +1,11 @@
 "use client";
+
+import { searchParams } from "@/routes/docs/natives/search-params";
 import { Native } from "@/types/Natives";
 import { camelCaseFromSnakeCase } from "@/utils/stringUtils";
-import { searchParams } from "@/app/docs/natives/search-params";
+import { useQueryStates } from "nuqs";
 import { Virtuoso } from "react-virtuoso";
 import NativeNavLink from "./native-nav-link";
-import { useQueryStates } from "nuqs";
 
 function searchForNative(natives: Native[], search: string, showUnnamedNatives: boolean) {
   const searchLower = search.toLowerCase();
@@ -36,7 +37,7 @@ export default function NativeLinks({
   }
 
   if (search && filteredNatives.length === 0) {
-    return <div className="text-center text-sm text-muted-foreground">No Natives Found</div>;
+    return <div className="text-muted-foreground text-center text-sm">No Natives Found</div>;
   }
 
   return (

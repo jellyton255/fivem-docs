@@ -1,4 +1,4 @@
-import { createSearchParamsCache, parseAsString, parseAsBoolean } from "nuqs/server";
+import { createSearchParamsCache, parseAsBoolean, parseAsString } from "nuqs/server";
 
 export const searchParams = {
   hash: parseAsString,

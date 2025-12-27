@@ -1,5 +1,6 @@
-import { capitalizeFirstLetter } from "@/utils/stringUtils";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
+import { capitalizeFirstLetter } from "@/utils/stringUtils";
 
 export type Realm = "client" | "server" | "shared";
 type RealmKeys = "client" | "server";
@@ -13,8 +14,6 @@ const gradient = `linear-gradient(
 	#228BE6 50%,
 	#F76707 50%
 )`;
-
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 function RealmIndicator({ realm }: { realm: Realm }) {
   return (

@@ -1,6 +1,6 @@
 import * as React from "react";
-import { ScrollArea, ScrollBar } from "./scroll-area";
 import { cn } from "@/lib/utils";
+import { ScrollArea, ScrollBar } from "./scroll-area";
 
 interface ScrollAreaWithShadowProps extends React.ComponentPropsWithoutRef<typeof ScrollArea> {
   orientation?: "horizontal" | "vertical";
@@ -197,14 +197,14 @@ export const ScrollAreaWithShadow = React.forwardRef<React.ElementRef<typeof Scr
             <div
               aria-hidden="true"
               className={cn(
-                "pointer-events-none absolute left-0 top-0 z-10 h-full w-8 rounded-l-md bg-gradient-to-r from-black/30 to-transparent opacity-0 transition-opacity duration-200",
+                "pointer-events-none absolute left-0 top-0 z-10 h-full w-8 rounded-l-md bg-linear-to-r from-black/30 to-transparent opacity-0 transition-opacity duration-200",
                 showLeftShadow && "opacity-100"
               )}
             />
             <div
               aria-hidden="true"
               className={cn(
-                "pointer-events-none absolute right-0 top-0 z-10 h-full w-8 rounded-r-md bg-gradient-to-l from-black/30 to-transparent opacity-0 transition-opacity duration-200",
+                "pointer-events-none absolute right-0 top-0 z-10 h-full w-8 rounded-r-md bg-linear-to-l from-black/30 to-transparent opacity-0 transition-opacity duration-200",
                 showRightShadow && "opacity-100"
               )}
             />
@@ -216,14 +216,14 @@ export const ScrollAreaWithShadow = React.forwardRef<React.ElementRef<typeof Scr
             <div
               aria-hidden="true"
               className={cn(
-                "pointer-events-none absolute left-0 top-0 z-10 h-8 w-full bg-gradient-to-b from-background to-transparent opacity-0 transition-opacity duration-200",
+                "pointer-events-none absolute left-0 top-0 z-10 h-8 w-full bg-linear-to-b from-background to-transparent opacity-0 transition-opacity duration-200",
                 showTopShadow && "opacity-100"
               )}
             />
             <div
               aria-hidden="true"
               className={cn(
-                "pointer-events-none absolute bottom-0 left-0 z-10 h-8 w-full bg-gradient-to-t from-background to-transparent opacity-0 transition-opacity duration-200",
+                "pointer-events-none absolute bottom-0 left-0 z-10 h-8 w-full bg-linear-to-t from-background to-transparent opacity-0 transition-opacity duration-200",
                 showBottomShadow && "opacity-100"
               )}
             />

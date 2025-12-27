@@ -1,0 +1,5 @@
+{
+  "cssVariables.lookupFiles": ["**/*.css", "**/*.scss", "**/*.sass", "**/*.less"],
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "typescript.experimental.useTsgo": false
+}

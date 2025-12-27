@@ -1,4 +1,5 @@
 "use client";
+
 import hljs, { AutoHighlightResult, HighlightResult } from "highlight.js";
 import javascript from "highlight.js/lib/languages/javascript";
 import lua from "highlight.js/lib/languages/lua";

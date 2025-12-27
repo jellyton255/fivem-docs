@@ -1,16 +1,19 @@
+import Highlight from "@/components/code";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Param } from "@/types/Natives";
 import { containsNewline, replaceParamType } from "@/utils/stringUtils";
 import { faTriangleExclamation } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
-import Link from "next/link";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Highlight from "@/components/code";
-import { Param } from "@/types/Natives";
 
 export function DescriptionSection({ description }: { description: string }) {
+  const searchParams = useSearchParams();
+
   if (!description || description == "")
     return (
       <>
@@ -43,10 +46,21 @@ export function DescriptionSection({ description }: { description: string }) {
             a(props) {
               const { children, href } = props;
 
+              const newParams = new URLSearchParams();
+              searchParams.forEach((value, key) => {
+                newParams.set(key, value);
+              });
+
+              if (href) {
+                newParams.set("hash", href.substring(2));
+              }
+
+              const queryString = newParams.toString();
+
               return (
                 <Link
                   className="font-semibold underline"
-                  href={(href && "/docs/natives?hash=" + href.substring(2)) || ""}
+                  href={`/docs/natives${queryString ? `?${queryString}` : ""}`}
                   style={{ whiteSpace: "pre-wrap" }}
                 >
                   {children}
